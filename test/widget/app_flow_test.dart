@@ -1,5 +1,6 @@
 import 'package:edenred_55_app/src/l10n/app_localizations.dart';
 import 'package:edenred_55_app/src/ui/core/money.dart';
+import 'package:edenred_55_app/src/ui/features/app_shell/views/syncing_account_screen.dart';
 import 'package:edenred_55_app/src/ui/features/auth/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,14 +55,29 @@ void main() {
     );
   });
 
-  testWidgets('loading app status shows progress indicator', (tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: Scaffold(body: Center(child: CircularProgressIndicator())),
-      ),
-    );
+  testWidgets('loading app status shows syncing account screen', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const MaterialApp(home: SyncingAccountScreen()));
 
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.text('Syncing your account'), findsOneWidget);
+    expect(find.text('Fetching your balance...'), findsOneWidget);
+    expect(
+      find.text(
+        'This should only take a moment. Securely connecting to your meal allowance provider.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.byIcon(Icons.account_balance_wallet), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey<String>('syncing-progress-ring')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey<String>('syncing-progress-ring-spinner')),
+      findsOneWidget,
+    );
+    expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
   testWidgets('money text formats euros', (tester) async {

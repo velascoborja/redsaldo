@@ -9,6 +9,7 @@ import 'data/services/pkce.dart';
 import 'l10n/app_localizations.dart';
 import 'ui/core/theme.dart';
 import 'ui/features/app_shell/app_view_model.dart';
+import 'ui/features/app_shell/views/syncing_account_screen.dart';
 import 'ui/features/auth/views/login_screen.dart';
 import 'ui/features/auth/views/login_webview_screen.dart';
 import 'ui/features/dashboard/views/dashboard_screen.dart';
@@ -58,9 +59,7 @@ class _Edenred55AppState extends State<Edenred55App> {
           builder: (context, controller, _) {
             final localizations = AppLocalizations.of(context);
             return switch (controller.status) {
-              AppStatus.loading => const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              ),
+              AppStatus.loading => const SyncingAccountScreen(),
               AppStatus.unauthenticated => LoginScreen(
                 onLogin: () => _startLogin(context),
               ),
