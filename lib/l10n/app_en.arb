@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "Edenred 55",
+  "appTitle": "Redsaldo",
   "unexpectedError": "Unexpected error",
   "loginBrand": "Redsaldo",
   "loginSubtitle": "Track your Ticket Restaurant weekly allowance.",
@@ -38,5 +38,11 @@
       }
     }
   },
-  "edenredLogin": "Edenred login"
+  "edenredLogin": "Edenred login",
+  "settingsTitle": "Settings",
+  "chooseCardTitle": "Choose a card to track",
+  "chooseCardSubtitle": "Select the primary account you want to manage today.",
+  "selectedBadge": "SELECTED",
+  "inactiveBadge": "INACTIVE",
+  "logoutButton": "LOGOUT"
 }

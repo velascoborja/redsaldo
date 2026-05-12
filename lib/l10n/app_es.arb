@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "appTitle": "Edenred 55",
+  "appTitle": "Redsaldo",
   "unexpectedError": "Error inesperado",
   "loginBrand": "Redsaldo",
   "loginSubtitle": "Controla tu saldo semanal de Ticket Restaurant.",
@@ -38,5 +38,11 @@
       }
     }
   },
-  "edenredLogin": "Inicio de sesión de Edenred"
+  "edenredLogin": "Inicio de sesión de Edenred",
+  "settingsTitle": "Configuración",
+  "chooseCardTitle": "Elige una tarjeta",
+  "chooseCardSubtitle": "Selecciona la cuenta principal que quieres gestionar hoy.",
+  "selectedBadge": "SELECCIONADA",
+  "inactiveBadge": "INACTIVA",
+  "logoutButton": "CERRAR SESIÓN"
 }

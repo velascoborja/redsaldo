@@ -9,7 +9,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appTitle => 'Edenred 55';
+  String get appTitle => 'Redsaldo';
 
   @override
   String get unexpectedError => 'Error inesperado';
@@ -78,4 +78,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get edenredLogin => 'Inicio de sesión de Edenred';
+
+  @override
+  String get settingsTitle => 'Configuración';
+
+  @override
+  String get chooseCardTitle => 'Elige una tarjeta';
+
+  @override
+  String get chooseCardSubtitle =>
+      'Selecciona la cuenta principal que quieres gestionar hoy.';
+
+  @override
+  String get selectedBadge => 'SELECCIONADA';
+
+  @override
+  String get inactiveBadge => 'INACTIVA';
+
+  @override
+  String get logoutButton => 'CERRAR SESIÓN';
 }

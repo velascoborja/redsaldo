@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Edenred 55'**
+  /// **'Redsaldo'**
   String get appTitle;
 
   /// No description provided for @unexpectedError.
@@ -229,6 +229,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edenred login'**
   String get edenredLogin;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @chooseCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a card to track'**
+  String get chooseCardTitle;
+
+  /// No description provided for @chooseCardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the primary account you want to manage today.'**
+  String get chooseCardSubtitle;
+
+  /// No description provided for @selectedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'SELECTED'**
+  String get selectedBadge;
+
+  /// No description provided for @inactiveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'INACTIVE'**
+  String get inactiveBadge;
+
+  /// No description provided for @logoutButton.
+  ///
+  /// In en, this message translates to:
+  /// **'LOGOUT'**
+  String get logoutButton;
 }
 
 class _AppLocalizationsDelegate
