@@ -75,7 +75,6 @@ class AppViewModel extends ChangeNotifier {
     }
 
     try {
-      _setStatus(AppStatus.loading);
       final accessToken = await _auth.getValidAccessToken();
       final loadedBalance = await _edenred.fetchBalance(
         accessToken: accessToken,
