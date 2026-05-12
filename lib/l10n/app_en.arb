@@ -1,0 +1,42 @@
+{
+  "@@locale": "en",
+  "appTitle": "Edenred 55",
+  "unexpectedError": "Unexpected error",
+  "loginBrand": "Redsaldo",
+  "loginSubtitle": "Track your Ticket Restaurant weekly allowance.",
+  "loginButton": "LOG IN WITH EDENRED",
+  "loginSecurityNote": "We never store your card numbers or login credentials. Your data remains secure.",
+  "refreshTooltip": "Refresh",
+  "logoutTooltip": "Logout",
+  "selectedProductFallback": "Selected product",
+  "availableBalance": "Available balance",
+  "weeklyLimit": "Weekly limit",
+  "spentThisWeek": "Spent this week",
+  "remainingThisWeek": "Remaining this week",
+  "editWeeklyLimit": "Edit weekly limit",
+  "changeSelectedProduct": "Change selected product",
+  "cancelAction": "Cancel",
+  "saveAction": "Save",
+  "chooseProduct": "Choose product",
+  "noProducts": "No Edenred products were returned.",
+  "ticketLabel": "Ticket {idTicket}",
+  "@ticketLabel": {
+    "placeholders": {
+      "idTicket": {
+        "type": "int"
+      }
+    }
+  },
+  "ticketLabelWithStatus": "Ticket {idTicket} - {status}",
+  "@ticketLabelWithStatus": {
+    "placeholders": {
+      "idTicket": {
+        "type": "int"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "edenredLogin": "Edenred login"
+}

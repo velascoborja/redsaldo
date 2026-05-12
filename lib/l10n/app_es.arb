@@ -1,0 +1,42 @@
+{
+  "@@locale": "es",
+  "appTitle": "Edenred 55",
+  "unexpectedError": "Error inesperado",
+  "loginBrand": "Redsaldo",
+  "loginSubtitle": "Controla tu saldo semanal de Ticket Restaurant.",
+  "loginButton": "INICIAR SESIÓN CON EDENRED",
+  "loginSecurityNote": "Nunca guardamos tus números de tarjeta ni tus credenciales. Tus datos permanecen seguros.",
+  "refreshTooltip": "Actualizar",
+  "logoutTooltip": "Cerrar sesión",
+  "selectedProductFallback": "Producto seleccionado",
+  "availableBalance": "Saldo disponible",
+  "weeklyLimit": "Límite semanal",
+  "spentThisWeek": "Gastado esta semana",
+  "remainingThisWeek": "Restante esta semana",
+  "editWeeklyLimit": "Editar límite semanal",
+  "changeSelectedProduct": "Cambiar producto seleccionado",
+  "cancelAction": "Cancelar",
+  "saveAction": "Guardar",
+  "chooseProduct": "Elegir producto",
+  "noProducts": "No se recibieron productos de Edenred.",
+  "ticketLabel": "Ticket {idTicket}",
+  "@ticketLabel": {
+    "placeholders": {
+      "idTicket": {
+        "type": "int"
+      }
+    }
+  },
+  "ticketLabelWithStatus": "Ticket {idTicket} - {status}",
+  "@ticketLabelWithStatus": {
+    "placeholders": {
+      "idTicket": {
+        "type": "int"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "edenredLogin": "Inicio de sesión de Edenred"
+}

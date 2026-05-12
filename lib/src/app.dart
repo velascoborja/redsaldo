@@ -5,6 +5,7 @@ import 'auth/auth_service.dart';
 import 'auth/oauth_callback.dart';
 import 'auth/pkce.dart';
 import 'edenred/edenred_api.dart';
+import 'l10n/app_localizations.dart';
 import 'state/app_controller.dart';
 import 'storage/app_preferences.dart';
 import 'ui/dashboard_screen.dart';
@@ -49,19 +50,32 @@ class _Edenred55AppState extends State<Edenred55App> {
     return ChangeNotifierProvider<AppController>.value(
       value: _controller,
       child: MaterialApp(
-        title: 'Edenred 55',
+        onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: EdenredTheme.light(),
         home: Consumer<AppController>(
           builder: (context, controller, _) {
+            final localizations = AppLocalizations.of(context);
             return switch (controller.status) {
-              AppStatus.loading => const Scaffold(body: Center(child: CircularProgressIndicator())),
-              AppStatus.unauthenticated => LoginScreen(onLogin: () => _startLogin(context)),
-              AppStatus.needsProductSelection => ProductPickerScreen(controller: controller),
+              AppStatus.loading => const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              ),
+              AppStatus.unauthenticated => LoginScreen(
+                onLogin: () => _startLogin(context),
+              ),
+              AppStatus.needsProductSelection => ProductPickerScreen(
+                controller: controller,
+              ),
               AppStatus.ready => DashboardScreen(controller: controller),
               AppStatus.error => Scaffold(
-                  appBar: AppBar(title: const Text('Edenred 55')),
-                  body: Center(child: Text(controller.errorMessage ?? 'Unexpected error')),
+                appBar: AppBar(title: Text(localizations.appTitle)),
+                body: Center(
+                  child: Text(
+                    controller.errorMessage ?? localizations.unexpectedError,
+                  ),
                 ),
+              ),
             };
           },
         ),
@@ -94,7 +108,10 @@ class _Edenred55AppState extends State<Edenred55App> {
     }
 
     final callback = OAuthCallback.parse(callbackUrl, state);
-    await widget.authService.exchangeCode(code: callback.code, verifier: pkce.verifier);
+    await widget.authService.exchangeCode(
+      code: callback.code,
+      verifier: pkce.verifier,
+    );
     if (context.mounted) {
       Navigator.of(context).pop();
     }

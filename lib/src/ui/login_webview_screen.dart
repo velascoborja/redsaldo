@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../l10n/app_localizations.dart';
+
 class LoginWebViewScreen extends StatefulWidget {
   const LoginWebViewScreen({
     required this.authorizeUrl,
@@ -41,13 +43,13 @@ class _LoginWebViewScreenState extends State<LoginWebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Edenred login')),
+      appBar: AppBar(title: Text(localizations.edenredLogin)),
       body: Stack(
         children: <Widget>[
           WebViewWidget(controller: _controller),
-          if (_isLoading)
-            const LinearProgressIndicator(),
+          if (_isLoading) const LinearProgressIndicator(),
         ],
       ),
     );
