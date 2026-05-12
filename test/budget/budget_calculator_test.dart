@@ -1,5 +1,5 @@
-import 'package:edenred_55_app/src/budget/budget_calculator.dart';
-import 'package:edenred_55_app/src/edenred/edenred_models.dart';
+import 'package:edenred_55_app/src/domain/models/product.dart';
+import 'package:edenred_55_app/src/domain/use_cases/calculate_weekly_budget.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 
@@ -18,7 +18,7 @@ void main() {
     final summary = calculateWeeklyBudget(
       weeklyLimit: 55,
       nowUtc: DateTime.utc(2026, 5, 6, 12),
-      transactions: <EdenredTransaction>[
+      transactions: <DomainTransaction>[
         tx(amount: -12.34, dateUtc: DateTime.utc(2026, 5, 5, 10)),
         tx(amount: 20, dateUtc: DateTime.utc(2026, 5, 5, 11)),
         tx(amount: -3.21, dateUtc: DateTime.utc(2026, 4, 30, 10)),
@@ -31,11 +31,8 @@ void main() {
   });
 }
 
-EdenredTransaction tx({
-  required double amount,
-  required DateTime dateUtc,
-}) {
-  return EdenredTransaction(
+DomainTransaction tx({required double amount, required DateTime dateUtc}) {
+  return DomainTransaction(
     id: '',
     dateUtc: dateUtc,
     description: 'test',

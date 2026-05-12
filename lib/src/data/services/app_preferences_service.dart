@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/selected_product_preference.dart';
+
 class AppPreferences {
   AppPreferences(this._prefs);
 
@@ -18,7 +20,9 @@ class AppPreferences {
       return null;
     }
 
-    return SelectedProductPreference.fromJson(jsonDecode(raw) as Map<String, Object?>);
+    return SelectedProductPreference.fromJson(
+      jsonDecode(raw) as Map<String, Object?>,
+    );
   }
 
   Future<void> saveWeeklyLimit(double value) {
@@ -36,37 +40,5 @@ class AppPreferences {
   Future<void> clearAll() async {
     await _prefs.remove(_selectedProductKey);
     await _prefs.remove(_weeklyLimitKey);
-  }
-}
-
-class SelectedProductPreference {
-  const SelectedProductPreference({
-    required this.idTicket,
-    required this.label,
-    required this.active,
-    required this.status,
-  });
-
-  final int idTicket;
-  final String label;
-  final bool active;
-  final String? status;
-
-  factory SelectedProductPreference.fromJson(Map<String, Object?> json) {
-    return SelectedProductPreference(
-      idTicket: (json['idTicket'] as num).toInt(),
-      label: json['label'] as String,
-      active: json['active'] as bool? ?? true,
-      status: json['status'] as String?,
-    );
-  }
-
-  Map<String, Object?> toJson() {
-    return <String, Object?>{
-      'idTicket': idTicket,
-      'label': label,
-      'active': active,
-      'status': status,
-    };
   }
 }

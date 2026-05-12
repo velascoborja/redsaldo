@@ -1,8 +1,10 @@
-import 'package:edenred_55_app/src/auth/token_models.dart';
-import 'package:edenred_55_app/src/edenred/edenred_models.dart';
-import 'package:edenred_55_app/src/state/app_controller.dart';
-import 'package:edenred_55_app/src/state/app_gateways.dart';
-import 'package:edenred_55_app/src/storage/app_preferences.dart';
+import 'package:edenred_55_app/src/data/models/token_models.dart';
+import 'package:edenred_55_app/src/data/repositories/auth_repository.dart';
+import 'package:edenred_55_app/src/data/repositories/edenred_repository.dart';
+import 'package:edenred_55_app/src/data/repositories/preferences_repository.dart';
+import 'package:edenred_55_app/src/data/services/app_preferences_service.dart';
+import 'package:edenred_55_app/src/domain/models/product.dart';
+import 'package:edenred_55_app/src/ui/features/app_shell/app_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
@@ -12,10 +14,12 @@ void main() {
 
   test('starts unauthenticated when no session exists', () async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
-    final controller = AppController(
+    final controller = AppViewModel(
       auth: FakeAuth(session: null),
-      api: FakeApi(),
-      preferences: AppPreferences(await SharedPreferences.getInstance()),
+      edenred: FakeEdenredRepository(),
+      preferences: PreferencesRepositoryImpl(
+        preferences: AppPreferences(await SharedPreferences.getInstance()),
+      ),
       now: () => DateTime.utc(2026, 5, 6, 12),
     );
 
@@ -26,7 +30,7 @@ void main() {
 
   test('requires product selection after login when none is stored', () async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
-    final controller = AppController(
+    final controller = AppViewModel(
       auth: FakeAuth(
         session: TokenSession(
           accessToken: 'access',
@@ -34,10 +38,19 @@ void main() {
           expiresAtUtc: DateTime.utc(2026, 5, 11),
         ),
       ),
-      api: FakeApi(products: <EdenredProduct>[
-        const EdenredProduct(idTicket: 123, label: 'Ticket Restaurant', active: true, status: 'ACTIVA'),
-      ]),
-      preferences: AppPreferences(await SharedPreferences.getInstance()),
+      edenred: FakeEdenredRepository(
+        products: <Product>[
+          const Product(
+            idTicket: 123,
+            label: 'Ticket Restaurant',
+            active: true,
+            status: 'ACTIVA',
+          ),
+        ],
+      ),
+      preferences: PreferencesRepositoryImpl(
+        preferences: AppPreferences(await SharedPreferences.getInstance()),
+      ),
       now: () => DateTime.utc(2026, 5, 6, 12),
     );
 
@@ -49,11 +62,18 @@ void main() {
 
   test('loads dashboard summary for selected product', () async {
     SharedPreferences.setMockInitialValues(<String, Object>{});
-    final preferences = AppPreferences(await SharedPreferences.getInstance());
-    await preferences.saveSelectedProduct(
-      const SelectedProductPreference(idTicket: 123, label: 'Ticket Restaurant', active: true, status: 'ACTIVA'),
+    final preferences = PreferencesRepositoryImpl(
+      preferences: AppPreferences(await SharedPreferences.getInstance()),
     );
-    final controller = AppController(
+    await preferences.saveSelectedProduct(
+      const SelectedProduct(
+        idTicket: 123,
+        label: 'Ticket Restaurant',
+        active: true,
+        status: 'ACTIVA',
+      ),
+    );
+    final controller = AppViewModel(
       auth: FakeAuth(
         session: TokenSession(
           accessToken: 'access',
@@ -61,12 +81,17 @@ void main() {
           expiresAtUtc: DateTime.utc(2026, 5, 11),
         ),
       ),
-      api: FakeApi(
-        products: <EdenredProduct>[
-          const EdenredProduct(idTicket: 123, label: 'Ticket Restaurant', active: true, status: 'ACTIVA'),
+      edenred: FakeEdenredRepository(
+        products: <Product>[
+          const Product(
+            idTicket: 123,
+            label: 'Ticket Restaurant',
+            active: true,
+            status: 'ACTIVA',
+          ),
         ],
-        balance: const EdenredBalance(amount: 80),
-        transactions: <EdenredTransaction>[
+        balance: const Balance(amount: 80),
+        transactions: <DomainTransaction>[
           tx(amount: -10, dateUtc: DateTime.utc(2026, 5, 5, 10)),
         ],
       ),
@@ -83,10 +108,18 @@ void main() {
   });
 }
 
-class FakeAuth implements AppAuthGateway {
+class FakeAuth implements AuthRepository {
   FakeAuth({required this.session});
 
   TokenSession? session;
+
+  @override
+  Future<TokenSession> exchangeCode({
+    required String code,
+    required String verifier,
+  }) async {
+    return session!;
+  }
 
   @override
   Future<String> getValidAccessToken() async => session!.accessToken;
@@ -100,34 +133,41 @@ class FakeAuth implements AppAuthGateway {
   }
 }
 
-class FakeApi implements AppEdenredGateway {
-  FakeApi({
-    this.products = const <EdenredProduct>[],
-    this.balance = const EdenredBalance(amount: 0),
-    this.transactions = const <EdenredTransaction>[],
+class FakeEdenredRepository implements EdenredRepository {
+  FakeEdenredRepository({
+    this.products = const <Product>[],
+    this.balance = const Balance(amount: 0),
+    this.transactions = const <DomainTransaction>[],
   });
 
-  final List<EdenredProduct> products;
-  final EdenredBalance balance;
-  final List<EdenredTransaction> transactions;
+  final List<Product> products;
+  final Balance balance;
+  final List<DomainTransaction> transactions;
 
   @override
-  Future<EdenredBalance> fetchBalance({required String accessToken, required int idTicket}) async => balance;
+  Future<Balance> fetchBalance({
+    required String accessToken,
+    required int idTicket,
+  }) async {
+    return balance;
+  }
 
   @override
-  Future<List<EdenredProduct>> fetchProducts({required String accessToken}) async => products;
+  Future<List<Product>> fetchProducts({required String accessToken}) async {
+    return products;
+  }
 
   @override
-  Future<List<EdenredTransaction>> fetchTransactions({required String accessToken, required int idTicket}) async {
+  Future<List<DomainTransaction>> fetchTransactions({
+    required String accessToken,
+    required int idTicket,
+  }) async {
     return transactions;
   }
 }
 
-EdenredTransaction tx({
-  required double amount,
-  required DateTime dateUtc,
-}) {
-  return EdenredTransaction(
+DomainTransaction tx({required double amount, required DateTime dateUtc}) {
+  return DomainTransaction(
     id: '',
     dateUtc: dateUtc,
     description: 'test',

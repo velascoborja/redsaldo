@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class LoginWebViewScreen extends StatefulWidget {
   const LoginWebViewScreen({

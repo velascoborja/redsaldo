@@ -1,6 +1,6 @@
-import 'package:edenred_55_app/src/ui/login_screen.dart';
-import 'package:edenred_55_app/src/ui/money.dart';
 import 'package:edenred_55_app/src/l10n/app_localizations.dart';
+import 'package:edenred_55_app/src/ui/core/money.dart';
+import 'package:edenred_55_app/src/ui/features/auth/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

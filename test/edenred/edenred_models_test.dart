@@ -1,4 +1,4 @@
-import 'package:edenred_55_app/src/edenred/edenred_models.dart';
+import 'package:edenred_55_app/src/data/models/edenred_api_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

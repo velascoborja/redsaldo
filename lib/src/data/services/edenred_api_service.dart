@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../config/edenred_config.dart';
-import '../state/app_gateways.dart';
-import 'edenred_models.dart';
+import '../../config/edenred_config.dart';
+import '../models/edenred_api_models.dart';
 
-class EdenredApi implements AppEdenredGateway {
+class EdenredApi implements EdenredApiService {
   EdenredApi(this._client);
 
   static const String _baseUrl = 'https://webservices.edenred.es/myedenred/v2';
@@ -14,7 +13,9 @@ class EdenredApi implements AppEdenredGateway {
   final http.Client _client;
 
   @override
-  Future<List<EdenredProduct>> fetchProducts({required String accessToken}) async {
+  Future<List<EdenredProduct>> fetchProducts({
+    required String accessToken,
+  }) async {
     final decoded = await _post(
       accessToken: accessToken,
       path: 'Products',
@@ -31,7 +32,10 @@ class EdenredApi implements AppEdenredGateway {
   }
 
   @override
-  Future<EdenredBalance> fetchBalance({required String accessToken, required int idTicket}) async {
+  Future<EdenredBalance> fetchBalance({
+    required String accessToken,
+    required int idTicket,
+  }) async {
     final decoded = await _post(
       accessToken: accessToken,
       path: 'ConsultaSaldo',
@@ -193,6 +197,20 @@ class EdenredApi implements AppEdenredGateway {
       'Edenred API response did not contain an object.',
     );
   }
+}
+
+abstract class EdenredApiService {
+  Future<List<EdenredProduct>> fetchProducts({required String accessToken});
+
+  Future<EdenredBalance> fetchBalance({
+    required String accessToken,
+    required int idTicket,
+  });
+
+  Future<List<EdenredTransaction>> fetchTransactions({
+    required String accessToken,
+    required int idTicket,
+  });
 }
 
 class EdenredApiException implements Exception {

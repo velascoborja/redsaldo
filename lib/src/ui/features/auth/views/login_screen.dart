@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../l10n/app_localizations.dart';
+import '../../../../l10n/app_localizations.dart';
 
 const _heroImageUrl =
     'https://lh3.googleusercontent.com/aida-public/AB6AXuBdQXQnQxxTM9AHc_PF0NgBUK9lq6Ze6IIGFy2Cl5-fibJqROl355sJ0FNLtjTRH2G5IdgEO6ilAklQ4EuIIdrk9GL2YEPrUVWnD_-KTPWEz7jwr_07JYl4ofScA_jY0dBRUVa-vvOJjFzDgSBIDzu8sxgExm9QN2uu_k0YkmlTI4yLUSEWYydpVBRR44mSrHzW3n02Qh3PuDzbuJB8w5CNZYYsrBAykjaeabu98FqXjybjW3duO9rgYExv2Gr1gslNdi_1JtHQEfU';

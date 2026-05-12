@@ -55,18 +55,74 @@ abstract final class EdenredTheme {
     );
 
     final textTheme = TextTheme(
-      displayLarge: GoogleFonts.plusJakartaSans(fontSize: 48, fontWeight: FontWeight.w700, height: 1.1, color: EdenredColors.navyDark),
-      headlineLarge: GoogleFonts.plusJakartaSans(fontSize: 32, fontWeight: FontWeight.w700, height: 1.2, color: EdenredColors.navyDark),
-      headlineMedium: GoogleFonts.plusJakartaSans(fontSize: 24, fontWeight: FontWeight.w600, height: 1.3, color: EdenredColors.navyDark),
-      titleLarge: GoogleFonts.plusJakartaSans(fontSize: 20, fontWeight: FontWeight.w700, color: EdenredColors.navyDark),
-      titleMedium: GoogleFonts.manrope(fontSize: 16, fontWeight: FontWeight.w600, color: EdenredColors.navyDark),
-      titleSmall: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w600, color: EdenredColors.navyDark),
-      bodyLarge: GoogleFonts.manrope(fontSize: 18, fontWeight: FontWeight.w400, height: 1.6, color: EdenredColors.navyDark),
-      bodyMedium: GoogleFonts.manrope(fontSize: 16, fontWeight: FontWeight.w400, height: 1.6, color: EdenredColors.navyDark),
-      bodySmall: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w400, height: 1.6, color: EdenredColors.grayDark),
-      labelLarge: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.w600, color: EdenredColors.white),
-      labelMedium: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0.28, color: EdenredColors.navyDark),
-      labelSmall: GoogleFonts.manrope(fontSize: 12, fontWeight: FontWeight.w400, color: EdenredColors.grayDark),
+      displayLarge: GoogleFonts.plusJakartaSans(
+        fontSize: 48,
+        fontWeight: FontWeight.w700,
+        height: 1.1,
+        color: EdenredColors.navyDark,
+      ),
+      headlineLarge: GoogleFonts.plusJakartaSans(
+        fontSize: 32,
+        fontWeight: FontWeight.w700,
+        height: 1.2,
+        color: EdenredColors.navyDark,
+      ),
+      headlineMedium: GoogleFonts.plusJakartaSans(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        height: 1.3,
+        color: EdenredColors.navyDark,
+      ),
+      titleLarge: GoogleFonts.plusJakartaSans(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: EdenredColors.navyDark,
+      ),
+      titleMedium: GoogleFonts.manrope(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: EdenredColors.navyDark,
+      ),
+      titleSmall: GoogleFonts.manrope(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: EdenredColors.navyDark,
+      ),
+      bodyLarge: GoogleFonts.manrope(
+        fontSize: 18,
+        fontWeight: FontWeight.w400,
+        height: 1.6,
+        color: EdenredColors.navyDark,
+      ),
+      bodyMedium: GoogleFonts.manrope(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        height: 1.6,
+        color: EdenredColors.navyDark,
+      ),
+      bodySmall: GoogleFonts.manrope(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        height: 1.6,
+        color: EdenredColors.grayDark,
+      ),
+      labelLarge: GoogleFonts.plusJakartaSans(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: EdenredColors.white,
+      ),
+      labelMedium: GoogleFonts.manrope(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        height: 1.2,
+        letterSpacing: 0.28,
+        color: EdenredColors.navyDark,
+      ),
+      labelSmall: GoogleFonts.manrope(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: EdenredColors.grayDark,
+      ),
     );
 
     return ThemeData(
@@ -89,7 +145,10 @@ abstract final class EdenredTheme {
         style: FilledButton.styleFrom(
           backgroundColor: EdenredColors.redAlert,
           foregroundColor: EdenredColors.white,
-          textStyle: GoogleFonts.plusJakartaSans(fontSize: 18, fontWeight: FontWeight.w600),
+          textStyle: GoogleFonts.plusJakartaSans(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           shape: const StadiumBorder(),
           minimumSize: const Size(double.infinity, 52),
@@ -98,7 +157,10 @@ abstract final class EdenredTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: EdenredColors.navyDark,
-          textStyle: GoogleFonts.manrope(fontSize: 14, fontWeight: FontWeight.w600),
+          textStyle: GoogleFonts.manrope(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       cardTheme: CardThemeData(
@@ -107,7 +169,10 @@ abstract final class EdenredTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         shadowColor: const Color(0x1A000000),
       ),
-      dividerTheme: const DividerThemeData(color: EdenredColors.borderGray, thickness: 1),
+      dividerTheme: const DividerThemeData(
+        color: EdenredColors.borderGray,
+        thickness: 1,
+      ),
       listTileTheme: const ListTileThemeData(
         iconColor: EdenredColors.navyDark,
         textColor: EdenredColors.navyDark,

@@ -1,4 +1,4 @@
-import '../config/edenred_config.dart';
+import '../../config/edenred_config.dart';
 
 class OAuthCallback {
   const OAuthCallback({required this.code, required this.state});

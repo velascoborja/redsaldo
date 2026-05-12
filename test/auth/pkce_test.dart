@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:edenred_55_app/src/auth/pkce.dart';
+import 'package:edenred_55_app/src/data/services/pkce.dart';
 import 'package:edenred_55_app/src/config/edenred_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 

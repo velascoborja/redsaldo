@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/app_localizations.dart';
-import '../state/app_controller.dart';
-import 'money.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../../core/money.dart';
+import '../../app_shell/app_view_model.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({required this.controller, super.key});
 
-  final AppController controller;
+  final AppViewModel controller;
 
   @override
   Widget build(BuildContext context) {

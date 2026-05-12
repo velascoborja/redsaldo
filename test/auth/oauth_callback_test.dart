@@ -1,4 +1,4 @@
-import 'package:edenred_55_app/src/auth/oauth_callback.dart';
+import 'package:edenred_55_app/src/data/services/oauth_callback.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

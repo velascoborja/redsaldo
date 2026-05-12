@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../config/edenred_config.dart';
-import '../state/app_gateways.dart';
-import 'token_models.dart';
+import '../../config/edenred_config.dart';
+import '../models/token_models.dart';
+import '../repositories/auth_repository.dart';
 import 'token_store.dart';
 
-class EdenredAuthService implements AppAuthGateway {
+class EdenredAuthService implements AuthRepository {
   EdenredAuthService(this._client, this._tokenStore, {DateTime Function()? now})
     : _now = now ?? DateTime.now;
 
@@ -22,6 +22,7 @@ class EdenredAuthService implements AppAuthGateway {
   @override
   Future<TokenSession?> loadSession() => _tokenStore.load();
 
+  @override
   Future<TokenSession> exchangeCode({
     required String code,
     required String verifier,

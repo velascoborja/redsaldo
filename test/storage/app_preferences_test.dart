@@ -1,4 +1,5 @@
-import 'package:edenred_55_app/src/storage/app_preferences.dart';
+import 'package:edenred_55_app/src/data/services/app_preferences_service.dart';
+import 'package:edenred_55_app/src/data/models/selected_product_preference.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

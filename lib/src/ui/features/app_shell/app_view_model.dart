@@ -1,39 +1,35 @@
 import 'package:flutter/foundation.dart';
 
-import '../budget/budget_calculator.dart';
-import '../edenred/edenred_models.dart';
-import '../storage/app_preferences.dart';
-import 'app_gateways.dart';
+import '../../../data/repositories/auth_repository.dart';
+import '../../../data/repositories/edenred_repository.dart';
+import '../../../data/repositories/preferences_repository.dart';
+import '../../../domain/models/product.dart';
+import '../../../domain/models/weekly_budget.dart';
+import '../../../domain/use_cases/calculate_weekly_budget.dart';
 
-enum AppStatus {
-  loading,
-  unauthenticated,
-  needsProductSelection,
-  ready,
-  error,
-}
+enum AppStatus { loading, unauthenticated, needsProductSelection, ready, error }
 
-class AppController extends ChangeNotifier {
-  AppController({
-    required AppAuthGateway auth,
-    required AppEdenredGateway api,
-    required AppPreferences preferences,
+class AppViewModel extends ChangeNotifier {
+  AppViewModel({
+    required AuthRepository auth,
+    required EdenredRepository edenred,
+    required PreferencesRepository preferences,
     DateTime Function()? now,
-  })  : _auth = auth,
-        _api = api,
-        _preferences = preferences,
-        _now = now ?? DateTime.now;
+  }) : _auth = auth,
+       _edenred = edenred,
+       _preferences = preferences,
+       _now = now ?? DateTime.now;
 
-  final AppAuthGateway _auth;
-  final AppEdenredGateway _api;
-  final AppPreferences _preferences;
+  final AuthRepository _auth;
+  final EdenredRepository _edenred;
+  final PreferencesRepository _preferences;
   final DateTime Function() _now;
 
   AppStatus status = AppStatus.loading;
   String? errorMessage;
-  List<EdenredProduct> products = <EdenredProduct>[];
-  SelectedProductPreference? selectedProduct;
-  EdenredBalance? balance;
+  List<Product> products = <Product>[];
+  SelectedProduct? selectedProduct;
+  Balance? balance;
   WeeklyBudgetSummary? summary;
 
   double get weeklyLimit => _preferences.weeklyLimit;
@@ -53,15 +49,15 @@ class AppController extends ChangeNotifier {
     await _loadProductsAndRoute();
   }
 
-  Future<void> selectProduct(EdenredProduct product) async {
-    final preference = SelectedProductPreference(
+  Future<void> selectProduct(Product product) async {
+    final selected = SelectedProduct(
       idTicket: product.idTicket,
       label: product.label,
       active: product.active,
       status: product.status,
     );
-    await _preferences.saveSelectedProduct(preference);
-    selectedProduct = preference;
+    await _preferences.saveSelectedProduct(selected);
+    selectedProduct = selected;
     await refreshDashboard();
   }
 
@@ -80,8 +76,14 @@ class AppController extends ChangeNotifier {
     try {
       _setStatus(AppStatus.loading);
       final accessToken = await _auth.getValidAccessToken();
-      final loadedBalance = await _api.fetchBalance(accessToken: accessToken, idTicket: product.idTicket);
-      final transactions = await _api.fetchTransactions(accessToken: accessToken, idTicket: product.idTicket);
+      final loadedBalance = await _edenred.fetchBalance(
+        accessToken: accessToken,
+        idTicket: product.idTicket,
+      );
+      final transactions = await _edenred.fetchTransactions(
+        accessToken: accessToken,
+        idTicket: product.idTicket,
+      );
       selectedProduct = product;
       balance = loadedBalance;
       summary = calculateWeeklyBudget(
@@ -114,10 +116,13 @@ class AppController extends ChangeNotifier {
     try {
       _setStatus(AppStatus.loading);
       final accessToken = await _auth.getValidAccessToken();
-      products = await _api.fetchProducts(accessToken: accessToken);
+      products = await _edenred.fetchProducts(accessToken: accessToken);
       final stored = _preferences.selectedProduct;
-      final storedStillAvailable = stored != null &&
-          products.any((product) => product.idTicket == stored.idTicket && product.active);
+      final storedStillAvailable =
+          stored != null &&
+          products.any(
+            (product) => product.idTicket == stored.idTicket && product.active,
+          );
 
       if (!storedStillAvailable) {
         selectedProduct = null;

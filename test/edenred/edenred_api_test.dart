@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:edenred_55_app/src/config/edenred_config.dart';
-import 'package:edenred_55_app/src/edenred/edenred_api.dart';
+import 'package:edenred_55_app/src/data/services/edenred_api_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
@@ -96,7 +96,10 @@ void main() {
         );
         final api = EdenredApi(client);
 
-        final transactions = await api.fetchTransactions(accessToken: 'token', idTicket: 3);
+        final transactions = await api.fetchTransactions(
+          accessToken: 'token',
+          idTicket: 3,
+        );
 
         expect(transactions.single.id, 'tx-1');
         expect(
@@ -185,7 +188,10 @@ void main() {
       );
       final api = EdenredApi(client);
 
-      final transactions = await api.fetchTransactions(accessToken: 'token', idTicket: 3);
+      final transactions = await api.fetchTransactions(
+        accessToken: 'token',
+        idTicket: 3,
+      );
 
       expect(transactions.single.id, 'tx-1');
     });

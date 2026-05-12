@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 
-import '../config/edenred_config.dart';
+import '../../config/edenred_config.dart';
 
 class PkcePair {
   const PkcePair({required this.verifier, required this.challenge});

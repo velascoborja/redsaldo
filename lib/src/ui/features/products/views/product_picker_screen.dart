@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/app_localizations.dart';
-import '../state/app_controller.dart';
+import '../../../../l10n/app_localizations.dart';
+import '../../app_shell/app_view_model.dart';
 
 class ProductPickerScreen extends StatelessWidget {
   const ProductPickerScreen({required this.controller, super.key});
 
-  final AppController controller;
+  final AppViewModel controller;
 
   @override
   Widget build(BuildContext context) {

@@ -4,10 +4,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 
 import 'src/app.dart';
-import 'src/auth/auth_service.dart';
-import 'src/auth/token_store.dart';
-import 'src/edenred/edenred_api.dart';
-import 'src/storage/app_preferences.dart';
+import 'src/data/repositories/edenred_repository.dart';
+import 'src/data/repositories/preferences_repository.dart';
+import 'src/data/services/app_preferences_service.dart';
+import 'src/data/services/auth_service.dart';
+import 'src/data/services/edenred_api_service.dart';
+import 'src/data/services/token_store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,12 +18,15 @@ Future<void> main() async {
   final httpClient = http.Client();
   final preferences = await SharedPreferences.getInstance();
   final tokenStore = TokenStore(FlutterSecureTokenBackend());
+  final authService = EdenredAuthService(httpClient, tokenStore);
+  final edenredApi = EdenredApi(httpClient);
+  final appPreferences = AppPreferences(preferences);
 
   runApp(
     Edenred55App(
-      authService: EdenredAuthService(httpClient, tokenStore),
-      edenredApi: EdenredApi(httpClient),
-      preferences: AppPreferences(preferences),
+      authService: authService,
+      edenredRepository: EdenredRepositoryImpl(service: edenredApi),
+      preferences: PreferencesRepositoryImpl(preferences: appPreferences),
     ),
   );
 }

@@ -1,5 +1,5 @@
-import 'package:edenred_55_app/src/auth/token_models.dart';
-import 'package:edenred_55_app/src/auth/token_store.dart';
+import 'package:edenred_55_app/src/data/models/token_models.dart';
+import 'package:edenred_55_app/src/data/services/token_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

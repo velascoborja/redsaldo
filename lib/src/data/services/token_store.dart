@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'token_models.dart';
+import '../models/token_models.dart';
 
 abstract class SecureTokenBackend {
   Future<String?> read({required String key});

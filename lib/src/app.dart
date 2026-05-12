@@ -1,60 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/auth_service.dart';
-import 'auth/oauth_callback.dart';
-import 'auth/pkce.dart';
-import 'edenred/edenred_api.dart';
+import 'data/repositories/auth_repository.dart';
+import 'data/repositories/edenred_repository.dart';
+import 'data/repositories/preferences_repository.dart';
+import 'data/services/oauth_callback.dart';
+import 'data/services/pkce.dart';
 import 'l10n/app_localizations.dart';
-import 'state/app_controller.dart';
-import 'storage/app_preferences.dart';
-import 'ui/dashboard_screen.dart';
-import 'ui/login_screen.dart';
-import 'ui/login_webview_screen.dart';
-import 'ui/product_picker_screen.dart';
-import 'ui/theme.dart';
+import 'ui/core/theme.dart';
+import 'ui/features/app_shell/app_view_model.dart';
+import 'ui/features/auth/views/login_screen.dart';
+import 'ui/features/auth/views/login_webview_screen.dart';
+import 'ui/features/dashboard/views/dashboard_screen.dart';
+import 'ui/features/products/views/product_picker_screen.dart';
 
 class Edenred55App extends StatefulWidget {
   const Edenred55App({
     required this.authService,
-    required this.edenredApi,
+    required this.edenredRepository,
     required this.preferences,
     super.key,
   });
 
-  final EdenredAuthService authService;
-  final EdenredApi edenredApi;
-  final AppPreferences preferences;
+  final AuthRepository authService;
+  final EdenredRepository edenredRepository;
+  final PreferencesRepository preferences;
 
   @override
   State<Edenred55App> createState() => _Edenred55AppState();
 }
 
 class _Edenred55AppState extends State<Edenred55App> {
-  late final AppController _controller;
+  late final AppViewModel _controller;
   PkcePair? _activePkce;
   String? _activeState;
 
   @override
   void initState() {
     super.initState();
-    _controller = AppController(
+    _controller = AppViewModel(
       auth: widget.authService,
-      api: widget.edenredApi,
+      edenred: widget.edenredRepository,
       preferences: widget.preferences,
     )..bootstrap();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppController>.value(
+    return ChangeNotifierProvider<AppViewModel>.value(
       value: _controller,
       child: MaterialApp(
         onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: EdenredTheme.light(),
-        home: Consumer<AppController>(
+        home: Consumer<AppViewModel>(
           builder: (context, controller, _) {
             final localizations = AppLocalizations.of(context);
             return switch (controller.status) {
