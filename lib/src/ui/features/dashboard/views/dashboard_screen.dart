@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/theme.dart';
 import '../../app_shell/app_view_model.dart';
+import '../../settings/views/settings_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({required this.controller, super.key});
@@ -25,14 +26,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    final summary = _c.summary;
-    final balance = _c.balance;
-
-    final remaining = summary?.remaining ?? 0.0;
-    final limit = summary?.weeklyLimit ?? _c.weeklyLimit;
-    final spent = summary?.weeklySpend ?? 0.0;
-    final progress = limit > 0 ? (remaining / limit).clamp(0.0, 1.0) : 0.0;
-    final productLabel = _c.selectedProduct?.label ?? localizations.appTitle;
 
     return Scaffold(
       backgroundColor: EdenredColors.grayLight,
@@ -42,13 +35,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: _c.changeProduct,
-          icon: const Icon(Icons.account_balance_wallet_outlined),
-          tooltip: localizations.changeSelectedProduct,
-        ),
         title: Text(
-          productLabel,
+          _selectedIndex == 2
+              ? localizations.settingsTitle
+              : localizations.appTitle,
           style: GoogleFonts.plusJakartaSans(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -56,58 +46,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: _c.logout,
-            icon: const Icon(Icons.logout),
-            tooltip: localizations.logoutTooltip,
-          ),
-        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(height: 1, color: const Color(0x0D000000)),
         ),
       ),
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: _c.refreshDashboard,
-          color: EdenredColors.redAlert,
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-            children: [
-              _HeroBalanceCard(
-                remainingLabel: localizations.remainingThisWeek,
-                remaining: remaining,
-                spent: spent,
-                limit: limit,
-                progress: progress,
-                rangeLabel: summary?.range.label ?? '',
-              ),
-              const SizedBox(height: 16),
-              _CardBalanceBanner(
-                balance: balance?.amount ?? 0.0,
-                onChangeCard: _c.changeProduct,
-              ),
-              const SizedBox(height: 8),
-              IntrinsicHeight(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: _EditLimitCard(
-                        onTap: () => _editWeeklyLimit(context),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _LastUpdatedCard(lastRefreshed: _c.lastRefreshed),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          _HomeBody(
+            controller: _c,
+            onEditLimit: () => _editWeeklyLimit(context),
           ),
-        ),
+          const SizedBox.shrink(),
+          SettingsScreen(controller: _c),
+        ],
       ),
       bottomNavigationBar: _BottomNavBar(
         selectedIndex: _selectedIndex,
@@ -128,7 +81,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           title: Text(loc.weeklyLimit),
           content: TextField(
             controller: textController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            keyboardType:
+                const TextInputType.numberWithOptions(decimal: true),
             decoration: const InputDecoration(suffixText: 'EUR'),
           ),
           actions: [
@@ -138,7 +92,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             FilledButton(
               onPressed: () => Navigator.of(dialogContext).pop(
-                double.tryParse(textController.text.replaceAll(',', '.')),
+                double.tryParse(
+                  textController.text.replaceAll(',', '.'),
+                ),
               ),
               child: Text(loc.saveAction),
             ),
@@ -149,6 +105,69 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (value != null) {
       await _c.saveWeeklyLimit(value);
     }
+  }
+}
+
+// ── Home Body ─────────────────────────────────────────────────────────────────
+
+class _HomeBody extends StatelessWidget {
+  const _HomeBody({required this.controller, required this.onEditLimit});
+
+  final AppViewModel controller;
+  final VoidCallback onEditLimit;
+
+  @override
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context);
+    final summary = controller.summary;
+    final balance = controller.balance;
+
+    final remaining = summary?.remaining ?? 0.0;
+    final limit = summary?.weeklyLimit ?? controller.weeklyLimit;
+    final spent = summary?.weeklySpend ?? 0.0;
+    final progress = limit > 0 ? (remaining / limit).clamp(0.0, 1.0) : 0.0;
+
+    return SafeArea(
+      child: RefreshIndicator(
+        onRefresh: controller.refreshDashboard,
+        color: EdenredColors.redAlert,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+          children: [
+            _HeroBalanceCard(
+              remainingLabel: localizations.remainingThisWeek,
+              remaining: remaining,
+              spent: spent,
+              limit: limit,
+              progress: progress,
+              rangeLabel: summary?.range.label ?? '',
+            ),
+            const SizedBox(height: 16),
+            _CardBalanceBanner(
+              balance: balance?.amount ?? 0.0,
+              onChangeCard: controller.changeProduct,
+            ),
+            const SizedBox(height: 8),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: _EditLimitCard(onTap: onEditLimit),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _LastUpdatedCard(
+                      lastRefreshed: controller.lastRefreshed,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -207,7 +226,10 @@ class _HeroBalanceCard extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(remaining.toStringAsFixed(2), style: tt.displayLarge),
+                      Text(
+                        remaining.toStringAsFixed(2),
+                        style: tt.displayLarge,
+                      ),
                       Text(
                         'EUR',
                         style: tt.bodyMedium?.copyWith(
@@ -229,7 +251,8 @@ class _HeroBalanceCard extends StatelessWidget {
           if (rangeLabel.isNotEmpty) ...[
             const SizedBox(height: 16),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: const BoxDecoration(
                 color: EdenredColors.grayLight,
                 borderRadius: BorderRadius.all(Radius.circular(100)),
@@ -320,7 +343,11 @@ class _CardBalanceBanner extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.credit_card, color: Colors.white, size: 22),
+            child: const Icon(
+              Icons.credit_card,
+              color: Colors.white,
+              size: 22,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -355,7 +382,10 @@ class _CardBalanceBanner extends StatelessWidget {
               backgroundColor: Colors.white,
               foregroundColor: EdenredColors.redAlert,
               elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 10,
+              ),
               shape: const StadiumBorder(),
               textStyle: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
@@ -399,7 +429,10 @@ class _EditLimitCard extends StatelessWidget {
           children: [
             const Icon(Icons.tune, color: EdenredColors.navyDark, size: 24),
             const SizedBox(height: 4),
-            Text('Edit Limit', style: Theme.of(context).textTheme.labelMedium),
+            Text(
+              'Edit Limit',
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
           ],
         ),
       ),
@@ -437,7 +470,11 @@ class _LastUpdatedCard extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.sync, color: EdenredColors.slateMuted, size: 16),
+              const Icon(
+                Icons.sync,
+                color: EdenredColors.slateMuted,
+                size: 16,
+              ),
               const SizedBox(width: 4),
               Text(
                 'Last updated',
@@ -505,7 +542,7 @@ class _BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.settings_outlined),
           activeIcon: Icon(Icons.settings),
-          label: 'Settings',
+          label: '',
         ),
       ],
     );

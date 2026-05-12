@@ -1,7 +1,14 @@
+import 'package:edenred_55_app/src/data/models/token_models.dart';
+import 'package:edenred_55_app/src/data/repositories/auth_repository.dart';
+import 'package:edenred_55_app/src/data/repositories/edenred_repository.dart';
+import 'package:edenred_55_app/src/data/repositories/preferences_repository.dart';
+import 'package:edenred_55_app/src/domain/models/product.dart';
 import 'package:edenred_55_app/src/l10n/app_localizations.dart';
 import 'package:edenred_55_app/src/ui/core/money.dart';
+import 'package:edenred_55_app/src/ui/features/app_shell/app_view_model.dart';
 import 'package:edenred_55_app/src/ui/features/app_shell/views/syncing_account_screen.dart';
 import 'package:edenred_55_app/src/ui/features/auth/views/login_screen.dart';
+import 'package:edenred_55_app/src/ui/features/dashboard/views/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -84,4 +91,102 @@ void main() {
     expect(formatEuros(42.66), '42.66 €');
     expect(formatEuros(-1.25), '-1.25 €');
   });
+
+  testWidgets('dashboard default tab shows home AppBar title', (tester) async {
+    final controller = _makeDashboardController();
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: DashboardScreen(controller: controller),
+      ),
+    );
+
+    expect(find.text('Redsaldo'), findsOneWidget);
+  });
+
+  testWidgets('tapping Settings tab updates AppBar to Settings title', (
+    tester,
+  ) async {
+    final controller = _makeDashboardController();
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: DashboardScreen(controller: controller),
+      ),
+    );
+
+    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.pump();
+
+    expect(find.text('Settings'), findsOneWidget);
+  });
+}
+
+AppViewModel _makeDashboardController() {
+  final vm = AppViewModel(
+    auth: _DashFakeAuth(),
+    edenred: _DashFakeEdenred(),
+    preferences: _DashFakePreferences(),
+  );
+  vm.products = const [];
+  vm.selectedProduct = null;
+  vm.status = AppStatus.ready;
+  return vm;
+}
+
+class _DashFakeAuth implements AuthRepository {
+  @override
+  Future<TokenSession> exchangeCode({
+    required String code,
+    required String verifier,
+  }) async => throw UnimplementedError();
+
+  @override
+  Future<String> getValidAccessToken() async => 'token';
+
+  @override
+  Future<TokenSession?> loadSession() async => null;
+
+  @override
+  Future<void> logout() async {}
+}
+
+class _DashFakeEdenred implements EdenredRepository {
+  @override
+  Future<List<Product>> fetchProducts({required String accessToken}) async =>
+      const [];
+
+  @override
+  Future<Balance> fetchBalance({
+    required String accessToken,
+    required int idTicket,
+  }) async => const Balance(amount: 0);
+
+  @override
+  Future<List<DomainTransaction>> fetchTransactions({
+    required String accessToken,
+    required int idTicket,
+  }) async => const [];
+}
+
+class _DashFakePreferences implements PreferencesRepository {
+  @override
+  double get weeklyLimit => 50.0;
+
+  @override
+  SelectedProduct? get selectedProduct => null;
+
+  @override
+  Future<void> saveWeeklyLimit(double value) async {}
+
+  @override
+  Future<void> saveSelectedProduct(SelectedProduct product) async {}
+
+  @override
+  Future<void> clearSelectedProduct() async {}
+
+  @override
+  Future<void> clearAll() async {}
 }
