@@ -1,0 +1,61 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildcache/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code workspace settings are often useful to share; uncomment if local-only.
+# .vscode/
+
+# Flutter / Dart / Pub
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+lib/generated_plugin_registrant.dart
+
+# Flutter generated artifacts
+ios/Flutter/Flutter.framework
+ios/Flutter/App.framework
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
+
+# iOS / CocoaPods
+ios/.symlinks/
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/Podfile.lock
+ios/Flutter/Flutter.podspec
+
+# Android / Gradle
+android/.gradle/
+android/local.properties
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# Symbolication
+app.*.symbols
+
+# Obfuscation
+app.*.map.json
