@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../l10n/app_localizations.dart';
@@ -10,6 +11,30 @@ const _navyDark = Color(0xFF0F172A);
 const _navyMedium = Color(0xFF1E293B);
 const _redAlert = Color(0xFFF72717);
 const _slateLight = Color(0xFF94A3B8);
+
+void loginScreenPreviewLoginCallback() {}
+
+@Preview(name: 'Login screen - English', group: 'Auth', size: Size(390, 844))
+Widget loginScreenEnglishPreview() {
+  return const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: Locale('en'),
+    home: LoginScreen(onLogin: loginScreenPreviewLoginCallback),
+  );
+}
+
+@Preview(name: 'Login screen - Spanish', group: 'Auth', size: Size(390, 844))
+Widget loginScreenSpanishPreview() {
+  return const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    locale: Locale('es'),
+    home: LoginScreen(onLogin: loginScreenPreviewLoginCallback),
+  );
+}
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({required this.onLogin, super.key});
