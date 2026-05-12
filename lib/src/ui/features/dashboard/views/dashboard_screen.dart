@@ -542,7 +542,7 @@ class _BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.settings_outlined),
           activeIcon: Icon(Icons.settings),
-          label: '',
+          label: 'Settings',
         ),
       ],
     );

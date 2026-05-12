@@ -102,7 +102,13 @@ void main() {
       ),
     );
 
-    expect(find.text('Redsaldo'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(AppBar),
+        matching: find.text('Redsaldo'),
+      ),
+      findsOneWidget,
+    );
   });
 
   testWidgets('tapping Settings tab updates AppBar to Settings title', (
@@ -120,7 +126,13 @@ void main() {
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pump();
 
-    expect(find.text('Settings'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(AppBar),
+        matching: find.text('Settings'),
+      ),
+      findsOneWidget,
+    );
   });
 }
 
