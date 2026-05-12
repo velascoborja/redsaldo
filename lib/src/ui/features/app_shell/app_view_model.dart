@@ -31,6 +31,7 @@ class AppViewModel extends ChangeNotifier {
   SelectedProduct? selectedProduct;
   Balance? balance;
   WeeklyBudgetSummary? summary;
+  DateTime? lastRefreshed;
 
   double get weeklyLimit => _preferences.weeklyLimit;
 
@@ -91,6 +92,7 @@ class AppViewModel extends ChangeNotifier {
         nowUtc: _now().toUtc(),
         transactions: transactions,
       );
+      lastRefreshed = _now();
       _setStatus(AppStatus.ready);
     } catch (error) {
       errorMessage = error.toString();
