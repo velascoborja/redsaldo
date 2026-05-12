@@ -51,16 +51,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Container(height: 1, color: const Color(0x0D000000)),
         ),
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: [
-          _HomeBody(
-            controller: _c,
-            onEditLimit: () => _editWeeklyLimit(context),
-          ),
-          const SizedBox.shrink(),
-          SettingsScreen(controller: _c),
-        ],
+      body: ListenableBuilder(
+        listenable: _c,
+        builder: (context, _) => IndexedStack(
+          index: _selectedIndex,
+          children: [
+            _HomeBody(
+              controller: _c,
+              onEditLimit: () => _editWeeklyLimit(context),
+            ),
+            const SizedBox.shrink(),
+            SettingsScreen(controller: _c),
+          ],
+        ),
       ),
       bottomNavigationBar: _BottomNavBar(
         selectedIndex: _selectedIndex,
