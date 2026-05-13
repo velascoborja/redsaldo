@@ -44,5 +44,11 @@
   "chooseCardSubtitle": "Select the primary account you want to manage today.",
   "selectedBadge": "SELECTED",
   "inactiveBadge": "INACTIVE",
-  "logoutButton": "LOGOUT"
+  "logoutButton": "LOGOUT",
+  "homeTitle": "Available balance",
+  "historyTitle": "History",
+  "recentSpending": "Recent spending",
+  "notCounted": "NOT COUNTED",
+  "noTransactionsTitle": "No transactions yet",
+  "noTransactionsBody": "Your spending history will appear here."
 }

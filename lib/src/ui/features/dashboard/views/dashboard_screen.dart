@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/theme.dart';
 import '../../app_shell/app_view_model.dart';
+import '../../history/views/history_screen.dart';
 import '../../settings/views/settings_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -36,9 +37,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
         title: Text(
-          _selectedIndex == 2
-              ? localizations.settingsTitle
-              : localizations.appTitle,
+          switch (_selectedIndex) {
+            1 => localizations.historyTitle,
+            2 => localizations.settingsTitle,
+            _ => localizations.homeTitle,
+          },
           style: GoogleFonts.plusJakartaSans(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -60,7 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               controller: _c,
               onEditLimit: () => _editWeeklyLimit(context),
             ),
-            const SizedBox.shrink(),
+            HistoryScreen(controller: _c),
             SettingsScreen(controller: _c),
           ],
         ),
@@ -229,14 +232,16 @@ class _HeroBalanceCard extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      const SizedBox(height: 16),
                       Text(
                         remaining.toStringAsFixed(2),
-                        style: tt.displayLarge,
+                        style: tt.displayLarge?.copyWith(height: 1.0),
                       ),
                       Text(
                         'EUR',
                         style: tt.bodyMedium?.copyWith(
                           color: EdenredColors.slateMuted,
+                          height: 1.0,
                         ),
                       ),
                     ],
@@ -519,7 +524,7 @@ class _BottomNavBar extends StatelessWidget {
       currentIndex: selectedIndex,
       onTap: onTap,
       backgroundColor: Colors.white,
-      selectedItemColor: EdenredColors.navyDark,
+      selectedItemColor: EdenredColors.redAlert,
       unselectedItemColor: EdenredColors.slateMuted,
       selectedLabelStyle: GoogleFonts.manrope(
         fontSize: 12,

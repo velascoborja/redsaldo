@@ -31,6 +31,7 @@ class AppViewModel extends ChangeNotifier {
   SelectedProduct? selectedProduct;
   Balance? balance;
   WeeklyBudgetSummary? summary;
+  List<DomainTransaction> transactions = <DomainTransaction>[];
   DateTime? lastRefreshed;
 
   double get weeklyLimit => _preferences.weeklyLimit;
@@ -80,16 +81,17 @@ class AppViewModel extends ChangeNotifier {
         accessToken: accessToken,
         idTicket: product.idTicket,
       );
-      final transactions = await _edenred.fetchTransactions(
+      final fetched = await _edenred.fetchTransactions(
         accessToken: accessToken,
         idTicket: product.idTicket,
       );
       selectedProduct = product;
       balance = loadedBalance;
+      transactions = fetched;
       summary = calculateWeeklyBudget(
         weeklyLimit: _preferences.weeklyLimit,
         nowUtc: _now().toUtc(),
-        transactions: transactions,
+        transactions: fetched,
       );
       lastRefreshed = _now();
       _setStatus(AppStatus.ready);
@@ -110,6 +112,7 @@ class AppViewModel extends ChangeNotifier {
     selectedProduct = null;
     balance = null;
     summary = null;
+    transactions = <DomainTransaction>[];
     _setStatus(AppStatus.unauthenticated);
   }
 

@@ -97,4 +97,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get logoutButton => 'CERRAR SESIÓN';
+
+  @override
+  String get homeTitle => 'Saldo disponible';
+
+  @override
+  String get historyTitle => 'Historial';
+
+  @override
+  String get recentSpending => 'Gastos recientes';
+
+  @override
+  String get notCounted => 'NO COMPUTA';
+
+  @override
+  String get noTransactionsTitle => 'Sin transacciones';
+
+  @override
+  String get noTransactionsBody => 'Tu historial de gastos aparecerá aquí.';
 }

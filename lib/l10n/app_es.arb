@@ -44,5 +44,11 @@
   "chooseCardSubtitle": "Selecciona la cuenta principal que quieres gestionar hoy.",
   "selectedBadge": "SELECCIONADA",
   "inactiveBadge": "INACTIVA",
-  "logoutButton": "CERRAR SESIÓN"
+  "logoutButton": "CERRAR SESIÓN",
+  "homeTitle": "Saldo disponible",
+  "historyTitle": "Historial",
+  "recentSpending": "Gastos recientes",
+  "notCounted": "NO COMPUTA",
+  "noTransactionsTitle": "Sin transacciones",
+  "noTransactionsBody": "Tu historial de gastos aparecerá aquí."
 }

@@ -265,6 +265,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'LOGOUT'**
   String get logoutButton;
+
+  /// No description provided for @homeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Available balance'**
+  String get homeTitle;
+
+  /// No description provided for @historyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get historyTitle;
+
+  /// No description provided for @recentSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent spending'**
+  String get recentSpending;
+
+  /// No description provided for @notCounted.
+  ///
+  /// In en, this message translates to:
+  /// **'NOT COUNTED'**
+  String get notCounted;
+
+  /// No description provided for @noTransactionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions yet'**
+  String get noTransactionsTitle;
+
+  /// No description provided for @noTransactionsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your spending history will appear here.'**
+  String get noTransactionsBody;
 }
 
 class _AppLocalizationsDelegate

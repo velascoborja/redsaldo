@@ -97,4 +97,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutButton => 'LOGOUT';
+
+  @override
+  String get homeTitle => 'Available balance';
+
+  @override
+  String get historyTitle => 'History';
+
+  @override
+  String get recentSpending => 'Recent spending';
+
+  @override
+  String get notCounted => 'NOT COUNTED';
+
+  @override
+  String get noTransactionsTitle => 'No transactions yet';
+
+  @override
+  String get noTransactionsBody => 'Your spending history will appear here.';
 }
