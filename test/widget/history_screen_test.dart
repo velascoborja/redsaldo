@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // This test FAILS before the fix: currently the screen reads controller.transactions
-  // (which is empty), so the week transaction never appears.
   testWidgets('shows current-week transactions from summary', (tester) async {
     final controller = _makeController(
       weekTransactions: [
@@ -58,9 +56,9 @@ AppViewModel _makeController({
   required List<DomainTransaction>? weekTransactions,
 }) {
   final vm = AppViewModel(
-    auth: _FakeAuth(),
-    edenred: _FakeEdenred(),
-    preferences: _FakePreferences(),
+    auth: _HistoryFakeAuth(),
+    edenred: _HistoryFakeEdenred(),
+    preferences: _HistoryFakePreferences(),
   );
   vm.status = AppStatus.ready;
   if (weekTransactions != null) {
@@ -91,7 +89,7 @@ DomainTransaction _tx({required String businessName, required double amount}) {
   );
 }
 
-class _FakeAuth implements AuthRepository {
+class _HistoryFakeAuth implements AuthRepository {
   @override
   Future<TokenSession> exchangeCode({
     required String code,
@@ -108,7 +106,7 @@ class _FakeAuth implements AuthRepository {
   Future<void> logout() async {}
 }
 
-class _FakeEdenred implements EdenredRepository {
+class _HistoryFakeEdenred implements EdenredRepository {
   @override
   Future<List<Product>> fetchProducts({required String accessToken}) async =>
       const [];
@@ -126,7 +124,7 @@ class _FakeEdenred implements EdenredRepository {
   }) async => const [];
 }
 
-class _FakePreferences implements PreferencesRepository {
+class _HistoryFakePreferences implements PreferencesRepository {
   @override
   double get weeklyLimit => 50.0;
 

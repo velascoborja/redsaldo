@@ -14,6 +14,7 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // summary.transactions is the current-week slice; controller.transactions is the full unfiltered fetch
     final transactions = controller.summary?.transactions ?? [];
 
     return transactions.isEmpty
