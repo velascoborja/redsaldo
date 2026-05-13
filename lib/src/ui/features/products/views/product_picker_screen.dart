@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../app_shell/app_view_model.dart';
+import '../widgets/product_card.dart';
 
 class ProductPickerScreen extends StatelessWidget {
   const ProductPickerScreen({required this.controller, super.key});
@@ -10,43 +11,38 @@ class ProductPickerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    final loc = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.chooseProduct),
+        title: Text(loc.chooseProduct),
         actions: <Widget>[
           IconButton(
             onPressed: controller.logout,
             icon: const Icon(Icons.logout),
-            tooltip: localizations.logoutTooltip,
+            tooltip: loc.logoutTooltip,
           ),
         ],
       ),
       body: SafeArea(
         child: controller.products.isEmpty
-            ? Center(child: Text(localizations.noProducts))
+            ? Center(child: Text(loc.noProducts))
             : ListView.separated(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                itemCount: controller.products.length,
+                separatorBuilder: (_, _) => const SizedBox(height: 8),
                 itemBuilder: (context, index) {
                   final product = controller.products[index];
-                  final subtitle = product.status.isEmpty
-                      ? localizations.ticketLabel(product.idTicket)
-                      : localizations.ticketLabelWithStatus(
-                          product.idTicket,
-                          product.status,
-                        );
-                  return ListTile(
-                    title: Text(product.label),
-                    subtitle: Text(subtitle),
-                    trailing: const Icon(Icons.chevron_right),
-                    enabled: product.active,
+                  return ProductCard(
+                    product: product,
+                    isSelected: false,
+                    selectedLabel: loc.selectedBadge,
+                    inactiveLabel: loc.inactiveBadge,
+                    ticketLabel: loc.ticketLabel(product.idTicket),
                     onTap: product.active
                         ? () => controller.selectProduct(product)
                         : null,
                   );
                 },
-                separatorBuilder: (context, index) => const Divider(height: 1),
-                itemCount: controller.products.length,
               ),
       ),
     );

@@ -115,6 +115,27 @@ void main() {
 
     expect(controller.status, AppStatus.unauthenticated);
   });
+
+  testWidgets('shows ticket ID for each product', (tester) async {
+    final products = [
+      const Product(idTicket: 101, label: 'Meal Card', active: true, status: ''),
+      const Product(idTicket: 202, label: 'Gift Card', active: true, status: ''),
+    ];
+    final controller = _makeController(
+      products: products,
+      selectedProduct: const SelectedProduct(
+        idTicket: 101,
+        label: 'Meal Card',
+        active: true,
+        status: '',
+      ),
+    );
+
+    await tester.pumpWidget(_wrap(SettingsScreen(controller: controller)));
+
+    expect(find.text('Ticket 101'), findsOneWidget);
+    expect(find.text('Ticket 202'), findsOneWidget);
+  });
 }
 
 AppViewModel _makeController({

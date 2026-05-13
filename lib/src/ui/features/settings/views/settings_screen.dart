@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../core/theme.dart';
 import '../../app_shell/app_view_model.dart';
-import '../../../../domain/models/product.dart';
+import '../../products/widgets/product_card.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({required this.controller, super.key});
@@ -50,11 +50,12 @@ class SettingsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final product = products[index];
                 final isSelected = product.idTicket == selectedId;
-                return _ProductCard(
+                return ProductCard(
                   product: product,
                   isSelected: isSelected,
                   selectedLabel: loc.selectedBadge,
                   inactiveLabel: loc.inactiveBadge,
+                  ticketLabel: loc.ticketLabel(product.idTicket),
                   onTap: product.active
                       ? () => controller.selectProduct(product)
                       : null,
@@ -96,120 +97,6 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ProductCard extends StatelessWidget {
-  const _ProductCard({
-    required this.product,
-    required this.isSelected,
-    required this.selectedLabel,
-    required this.inactiveLabel,
-    this.onTap,
-  });
-
-  final Product product;
-  final bool isSelected;
-  final String selectedLabel;
-  final String inactiveLabel;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final tt = Theme.of(context).textTheme;
-    final inactive = !product.active;
-
-    return Opacity(
-      opacity: inactive ? 0.6 : 1.0,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color:
-                isSelected ? EdenredColors.lightSlate : EdenredColors.white,
-            borderRadius: const BorderRadius.all(Radius.circular(24)),
-            border: Border.all(
-              color: isSelected
-                  ? EdenredColors.redAlert
-                  : EdenredColors.borderGray,
-              width: isSelected ? 2 : 1,
-            ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: const BoxDecoration(
-                  color: EdenredColors.grayLight,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                child: const Icon(
-                  Icons.credit_card,
-                  color: EdenredColors.slateMuted,
-                  size: 24,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.label,
-                      style: tt.titleMedium,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (product.status.isNotEmpty)
-                      Text(
-                        product.status,
-                        style: tt.bodySmall?.copyWith(
-                          color: EdenredColors.slateMuted,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 16),
-              if (isSelected || inactive)
-                _Badge(
-                  label: isSelected ? selectedLabel : inactiveLabel,
-                  selected: isSelected,
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Badge extends StatelessWidget {
-  const _Badge({required this.label, required this.selected});
-
-  final String label;
-  final bool selected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: selected ? EdenredColors.redAlert : EdenredColors.grayLight,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.manrope(
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 0.5,
-          color: selected ? EdenredColors.white : EdenredColors.slateMuted,
-        ),
       ),
     );
   }
