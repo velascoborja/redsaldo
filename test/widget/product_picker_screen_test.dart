@@ -88,6 +88,18 @@ void main() {
     );
     expect(find.byType(ProductCard), findsNothing);
   });
+
+  testWidgets('tapping inactive product does not change selection', (tester) async {
+    final products = [
+      const Product(idTicket: 1, label: 'Active Card', active: true, status: ''),
+      const Product(idTicket: 2, label: 'Inactive Card', active: false, status: ''),
+    ];
+    final controller = _makeController(products: products);
+    await tester.pumpWidget(_wrap(ProductPickerScreen(controller: controller)));
+    await tester.tap(find.text('Inactive Card'));
+    await tester.pumpAndSettle();
+    expect(controller.selectedProduct, isNull);
+  });
 }
 
 class _FakeAuth implements AuthRepository {
