@@ -112,4 +112,19 @@ void main() {
     await tester.tap(find.byType(ProductCard));
     expect(tapped, isTrue);
   });
+
+  testWidgets('does not dim selected product even if inactive', (tester) async {
+    await tester.pumpWidget(_wrap(
+      ProductCard(
+        product: _inactive,
+        isSelected: true,
+        selectedLabel: 'SEL',
+        inactiveLabel: 'OFF',
+        ticketLabel: 'Ticket 7',
+        onTap: null,
+      ),
+    ));
+    final opacity = tester.widget<Opacity>(find.byType(Opacity));
+    expect(opacity.opacity, 1.0);
+  });
 }

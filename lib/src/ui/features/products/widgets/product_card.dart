@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
     final inactive = !product.active;
 
     return Opacity(
-      opacity: inactive ? 0.6 : 1.0,
+      opacity: inactive && !isSelected ? 0.6 : 1.0,
       child: GestureDetector(
         onTap: onTap,
         child: Container(
@@ -65,7 +65,7 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       product.label,
-                      style: tt.titleMedium,
+                      style: tt.titleMedium?.copyWith(),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
@@ -86,12 +86,13 @@ class ProductCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
-              if (isSelected || inactive)
+              if (isSelected || inactive) ...[
+                const SizedBox(width: 16),
                 _Badge(
                   label: isSelected ? selectedLabel : inactiveLabel,
                   selected: isSelected,
                 ),
+              ],
             ],
           ),
         ),
