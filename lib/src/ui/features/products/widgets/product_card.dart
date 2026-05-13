@@ -65,7 +65,7 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       product.label,
-                      style: tt.titleMedium?.copyWith(),
+                      style: tt.titleMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
