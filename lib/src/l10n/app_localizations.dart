@@ -319,6 +319,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Issued'**
   String get cardStatusIssued;
+
+  /// No description provided for @logoutConfirmationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logoutConfirmationTitle;
+
+  /// No description provided for @logoutConfirmationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get logoutConfirmationMessage;
+
+  /// No description provided for @logoutConfirmationConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logoutConfirmationConfirm;
+
+  /// No description provided for @syncingAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing your account'**
+  String get syncingAccountTitle;
+
+  /// No description provided for @syncingAccountStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Fetching your balance...'**
+  String get syncingAccountStatus;
+
+  /// No description provided for @syncingAccountDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This should only take a moment. Securely connecting to your meal allowance provider.'**
+  String get syncingAccountDescription;
+
+  /// No description provided for @cardBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'CARD BALANCE'**
+  String get cardBalance;
+
+  /// No description provided for @changeCardAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Card'**
+  String get changeCardAction;
+
+  /// No description provided for @editLimitAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Limit'**
+  String get editLimitAction;
+
+  /// No description provided for @lastUpdatedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated'**
+  String get lastUpdatedLabel;
+
+  /// No description provided for @lastUpdatedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, {time}'**
+  String lastUpdatedToday(String time);
+
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// No description provided for @suggestedLimitText.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested limit based on 5 working days'**
+  String get suggestedLimitText;
+
+  /// No description provided for @spentOfLimitText.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} EUR spent of {limit} EUR limit'**
+  String spentOfLimitText(String spent, String limit);
 }
 
 class _AppLocalizationsDelegate

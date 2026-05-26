@@ -125,4 +125,53 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cardStatusIssued => 'Emitida';
+
+  @override
+  String get logoutConfirmationTitle => 'Cerrar sesión';
+
+  @override
+  String get logoutConfirmationMessage =>
+      '¿Estás seguro de que deseas cerrar sesión?';
+
+  @override
+  String get logoutConfirmationConfirm => 'Cerrar sesión';
+
+  @override
+  String get syncingAccountTitle => 'Sincronizando tu cuenta';
+
+  @override
+  String get syncingAccountStatus => 'Obteniendo tu saldo...';
+
+  @override
+  String get syncingAccountDescription =>
+      'Esto solo tomará un momento. Conectando de forma segura con tu proveedor de vales de comida.';
+
+  @override
+  String get cardBalance => 'SALDO DE LA TARJETA';
+
+  @override
+  String get changeCardAction => 'Cambiar tarjeta';
+
+  @override
+  String get editLimitAction => 'Editar límite';
+
+  @override
+  String get lastUpdatedLabel => 'Última actualización';
+
+  @override
+  String lastUpdatedToday(String time) {
+    return 'Hoy, $time';
+  }
+
+  @override
+  String get navHome => 'Inicio';
+
+  @override
+  String get suggestedLimitText =>
+      'Límite sugerido basado en 5 días laborables';
+
+  @override
+  String spentOfLimitText(String spent, String limit) {
+    return '$spent EUR gastados de un límite de $limit EUR';
+  }
 }

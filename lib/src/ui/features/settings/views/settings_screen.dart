@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../core/dialogs.dart';
 import '../../../core/theme.dart';
 import '../../app_shell/app_view_model.dart';
 import '../../products/widgets/product_card.dart';
@@ -80,7 +81,12 @@ class SettingsScreen extends StatelessWidget {
               child: SizedBox(
                 width: 200,
                 child: OutlinedButton.icon(
-                  onPressed: controller.logout,
+                  onPressed: () async {
+                    final confirm = await showLogoutConfirmationDialog(context);
+                    if (confirm && context.mounted) {
+                      await controller.logout();
+                    }
+                  },
                   icon: const Icon(
                     Icons.logout,
                     color: EdenredColors.navyDark,

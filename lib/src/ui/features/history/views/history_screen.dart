@@ -105,8 +105,9 @@ class _TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
+    final locale = Localizations.localeOf(context).languageCode;
     final isTopUp = transaction.amount >= 0;
-    final dayLabel = intl.DateFormat('EEE').format(transaction.dateUtc.toLocal());
+    final dayLabel = intl.DateFormat('EEE', locale).format(transaction.dateUtc.toLocal());
     final displayName = transaction.businessName.isNotEmpty
         ? transaction.businessName
         : transaction.description;

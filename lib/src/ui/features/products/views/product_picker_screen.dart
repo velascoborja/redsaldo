@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../core/dialogs.dart';
 import '../../app_shell/app_view_model.dart';
 import '../widgets/product_card.dart';
 
@@ -17,7 +18,12 @@ class ProductPickerScreen extends StatelessWidget {
         title: Text(loc.chooseProduct),
         actions: <Widget>[
           IconButton(
-            onPressed: controller.logout,
+            onPressed: () async {
+              final confirm = await showLogoutConfirmationDialog(context);
+              if (confirm && context.mounted) {
+                await controller.logout();
+              }
+            },
             icon: const Icon(Icons.logout),
             tooltip: loc.logoutTooltip,
           ),

@@ -53,5 +53,36 @@
   "noTransactionsTitle": "No transactions yet",
   "noTransactionsBody": "Your spending history will appear here.",
   "cardStatusActive": "Active",
-  "cardStatusIssued": "Issued"
+  "cardStatusIssued": "Issued",
+  "logoutConfirmationTitle": "Log out",
+  "logoutConfirmationMessage": "Are you sure you want to log out?",
+  "logoutConfirmationConfirm": "Log out",
+  "syncingAccountTitle": "Syncing your account",
+  "syncingAccountStatus": "Fetching your balance...",
+  "syncingAccountDescription": "This should only take a moment. Securely connecting to your meal allowance provider.",
+  "cardBalance": "CARD BALANCE",
+  "changeCardAction": "Change Card",
+  "editLimitAction": "Edit Limit",
+  "lastUpdatedLabel": "Last updated",
+  "lastUpdatedToday": "Today, {time}",
+  "@lastUpdatedToday": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "navHome": "Home",
+  "suggestedLimitText": "Suggested limit based on 5 working days",
+  "spentOfLimitText": "{spent} EUR spent of {limit} EUR limit",
+  "@spentOfLimitText": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  }
 }

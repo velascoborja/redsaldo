@@ -53,5 +53,36 @@
   "noTransactionsTitle": "Sin transacciones",
   "noTransactionsBody": "Tu historial de gastos aparecerá aquí.",
   "cardStatusActive": "Activa",
-  "cardStatusIssued": "Emitida"
+  "cardStatusIssued": "Emitida",
+  "logoutConfirmationTitle": "Cerrar sesión",
+  "logoutConfirmationMessage": "¿Estás seguro de que deseas cerrar sesión?",
+  "logoutConfirmationConfirm": "Cerrar sesión",
+  "syncingAccountTitle": "Sincronizando tu cuenta",
+  "syncingAccountStatus": "Obteniendo tu saldo...",
+  "syncingAccountDescription": "Esto solo tomará un momento. Conectando de forma segura con tu proveedor de vales de comida.",
+  "cardBalance": "SALDO DE LA TARJETA",
+  "changeCardAction": "Cambiar tarjeta",
+  "editLimitAction": "Editar límite",
+  "lastUpdatedLabel": "Última actualización",
+  "lastUpdatedToday": "Hoy, {time}",
+  "@lastUpdatedToday": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "navHome": "Inicio",
+  "suggestedLimitText": "Límite sugerido basado en 5 días laborables",
+  "spentOfLimitText": "{spent} EUR gastados de un límite de {limit} EUR",
+  "@spentOfLimitText": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  }
 }

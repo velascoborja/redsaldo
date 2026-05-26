@@ -124,4 +124,51 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cardStatusIssued => 'Issued';
+
+  @override
+  String get logoutConfirmationTitle => 'Log out';
+
+  @override
+  String get logoutConfirmationMessage => 'Are you sure you want to log out?';
+
+  @override
+  String get logoutConfirmationConfirm => 'Log out';
+
+  @override
+  String get syncingAccountTitle => 'Syncing your account';
+
+  @override
+  String get syncingAccountStatus => 'Fetching your balance...';
+
+  @override
+  String get syncingAccountDescription =>
+      'This should only take a moment. Securely connecting to your meal allowance provider.';
+
+  @override
+  String get cardBalance => 'CARD BALANCE';
+
+  @override
+  String get changeCardAction => 'Change Card';
+
+  @override
+  String get editLimitAction => 'Edit Limit';
+
+  @override
+  String get lastUpdatedLabel => 'Last updated';
+
+  @override
+  String lastUpdatedToday(String time) {
+    return 'Today, $time';
+  }
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get suggestedLimitText => 'Suggested limit based on 5 working days';
+
+  @override
+  String spentOfLimitText(String spent, String limit) {
+    return '$spent EUR spent of $limit EUR limit';
+  }
 }

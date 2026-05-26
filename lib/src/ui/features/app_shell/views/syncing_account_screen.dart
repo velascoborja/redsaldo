@@ -2,19 +2,16 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/app_localizations.dart';
 import '../../../core/theme.dart';
 
 class SyncingAccountScreen extends StatelessWidget {
   const SyncingAccountScreen({super.key});
 
-  static const String title = 'Syncing your account';
-  static const String status = 'Fetching your balance...';
-  static const String description =
-      'This should only take a moment. Securely connecting to your meal allowance provider.';
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final loc = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: EdenredColors.white,
@@ -35,7 +32,7 @@ class SyncingAccountScreen extends StatelessWidget {
                         const _WalletProgressMark(),
                         const SizedBox(height: 40),
                         Text(
-                          title,
+                          loc.syncingAccountTitle,
                           textAlign: TextAlign.center,
                           style: textTheme.headlineMedium?.copyWith(
                             fontWeight: FontWeight.w700,
@@ -45,7 +42,7 @@ class SyncingAccountScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          status,
+                          loc.syncingAccountStatus,
                           textAlign: TextAlign.center,
                           style: textTheme.bodyLarge?.copyWith(
                             color: EdenredColors.navyDark,
@@ -54,7 +51,7 @@ class SyncingAccountScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          description,
+                          loc.syncingAccountDescription,
                           textAlign: TextAlign.center,
                           style: textTheme.bodyMedium?.copyWith(
                             color: EdenredColors.navyDark.withValues(

@@ -180,6 +180,7 @@ class _HeroBalanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tt = Theme.of(context).textTheme;
+    final loc = AppLocalizations.of(context);
     return Container(
       decoration: const BoxDecoration(
         color: EdenredColors.white,
@@ -233,7 +234,7 @@ class _HeroBalanceCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            '${spent.toStringAsFixed(2)} EUR spent of ${limit.toStringAsFixed(2)} EUR limit',
+            loc.spentOfLimitText(spent.toStringAsFixed(2), limit.toStringAsFixed(2)),
             style: tt.bodyMedium?.copyWith(color: EdenredColors.slateMuted),
             textAlign: TextAlign.center,
           ),
@@ -310,6 +311,7 @@ class _CardBalanceBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return Container(
       decoration: const BoxDecoration(
         color: EdenredColors.redAlert,
@@ -345,7 +347,7 @@ class _CardBalanceBanner extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'CARD BALANCE',
+                  loc.cardBalance,
                   style: GoogleFonts.manrope(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
@@ -381,7 +383,7 @@ class _CardBalanceBanner extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            child: const Text('Change Card'),
+            child: Text(loc.changeCardAction),
           ),
         ],
       ),
@@ -398,6 +400,7 @@ class _EditLimitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -419,7 +422,7 @@ class _EditLimitCard extends StatelessWidget {
             const Icon(Icons.tune, color: EdenredColors.navyDark, size: 24),
             const SizedBox(height: 4),
             Text(
-              'Edit Limit',
+              loc.editLimitAction,
               style: Theme.of(context).textTheme.labelMedium,
             ),
           ],
@@ -436,8 +439,10 @@ class _LastUpdatedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).languageCode;
     final timeLabel = lastRefreshed != null
-        ? 'Today, ${intl.DateFormat('h:mm a').format(lastRefreshed!)}'
+        ? loc.lastUpdatedToday(intl.DateFormat('jm', locale).format(lastRefreshed!))
         : '—';
 
     return Container(
@@ -466,7 +471,7 @@ class _LastUpdatedCard extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                'Last updated',
+                loc.lastUpdatedLabel,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                   color: EdenredColors.slateMuted,
                   fontSize: 11,
@@ -501,6 +506,7 @@ class _BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return BottomNavigationBar(
       currentIndex: selectedIndex,
       onTap: onTap,
@@ -517,21 +523,21 @@ class _BottomNavBar extends StatelessWidget {
       ),
       type: BottomNavigationBarType.fixed,
       elevation: 8,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          activeIcon: Icon(Icons.home),
-          label: 'Home',
+          icon: const Icon(Icons.home_outlined),
+          activeIcon: const Icon(Icons.home),
+          label: loc.navHome,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.receipt_long_outlined),
-          activeIcon: Icon(Icons.receipt_long),
-          label: 'History',
+          icon: const Icon(Icons.receipt_long_outlined),
+          activeIcon: const Icon(Icons.receipt_long),
+          label: loc.historyTitle,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.settings_outlined),
-          activeIcon: Icon(Icons.settings),
-          label: 'Settings',
+          icon: const Icon(Icons.settings_outlined),
+          activeIcon: const Icon(Icons.settings),
+          label: loc.settingsTitle,
         ),
       ],
     );
@@ -627,7 +633,7 @@ class _SetLimitBottomSheetState extends State<_SetLimitBottomSheet> {
             _LimitInput(controller: _controller),
             const SizedBox(height: 8),
             Text(
-              'Suggested limit based on 5 working days',
+              loc.suggestedLimitText,
               style: tt.bodySmall?.copyWith(color: EdenredColors.slateMuted),
               textAlign: TextAlign.center,
             ),
