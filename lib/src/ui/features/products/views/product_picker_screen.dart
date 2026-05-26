@@ -32,12 +32,23 @@ class ProductPickerScreen extends StatelessWidget {
                 separatorBuilder: (_, _) => const SizedBox(height: 8),
                 itemBuilder: (context, index) {
                   final product = controller.products[index];
+                  final String statusLabel;
+                  switch (product.status) {
+                    case 'A':
+                      statusLabel = loc.cardStatusActive;
+                    case 'E':
+                      statusLabel = loc.cardStatusIssued;
+                    default:
+                      statusLabel = product.status;
+                  }
+
                   return ProductCard(
                     product: product,
                     isSelected: false,
                     selectedLabel: loc.selectedBadge,
                     inactiveLabel: loc.inactiveBadge,
                     ticketLabel: loc.ticketLabel(product.idTicket),
+                    statusLabel: statusLabel,
                     onTap: product.active
                         ? () => controller.selectProduct(product)
                         : null,

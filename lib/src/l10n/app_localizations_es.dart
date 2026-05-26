@@ -119,4 +119,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noTransactionsBody => 'Tu historial de gastos aparecerá aquí.';
+
+  @override
+  String get cardStatusActive => 'Activa';
+
+  @override
+  String get cardStatusIssued => 'Emitida';
 }

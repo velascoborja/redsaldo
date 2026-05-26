@@ -59,3 +59,9 @@ app.*.symbols
 
 # Obfuscation
 app.*.map.json
+
+# Agent Configuration
+.superpowers/
+docs/superpowers/
+.antigravity/
+.antigravitycli/

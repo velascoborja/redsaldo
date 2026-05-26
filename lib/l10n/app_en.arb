@@ -51,5 +51,7 @@
   "showingThisWeekOnly": "Showing this week's transactions only",
   "notCounted": "NOT COUNTED",
   "noTransactionsTitle": "No transactions yet",
-  "noTransactionsBody": "Your spending history will appear here."
+  "noTransactionsBody": "Your spending history will appear here.",
+  "cardStatusActive": "Active",
+  "cardStatusIssued": "Issued"
 }

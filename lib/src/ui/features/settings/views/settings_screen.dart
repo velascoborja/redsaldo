@@ -50,12 +50,23 @@ class SettingsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final product = products[index];
                 final isSelected = product.idTicket == selectedId;
+                final String statusLabel;
+                switch (product.status) {
+                  case 'A':
+                    statusLabel = loc.cardStatusActive;
+                  case 'E':
+                    statusLabel = loc.cardStatusIssued;
+                  default:
+                    statusLabel = product.status;
+                }
+
                 return ProductCard(
                   product: product,
                   isSelected: isSelected,
                   selectedLabel: loc.selectedBadge,
                   inactiveLabel: loc.inactiveBadge,
                   ticketLabel: loc.ticketLabel(product.idTicket),
+                  statusLabel: statusLabel,
                   onTap: product.active
                       ? () => controller.selectProduct(product)
                       : null,

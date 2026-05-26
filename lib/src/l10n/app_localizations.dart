@@ -307,6 +307,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your spending history will appear here.'**
   String get noTransactionsBody;
+
+  /// No description provided for @cardStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get cardStatusActive;
+
+  /// No description provided for @cardStatusIssued.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued'**
+  String get cardStatusIssued;
 }
 
 class _AppLocalizationsDelegate

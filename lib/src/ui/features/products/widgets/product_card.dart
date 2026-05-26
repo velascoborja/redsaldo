@@ -11,6 +11,7 @@ class ProductCard extends StatelessWidget {
     required this.selectedLabel,
     required this.inactiveLabel,
     required this.ticketLabel,
+    required this.statusLabel,
     this.onTap,
     super.key,
   });
@@ -20,6 +21,7 @@ class ProductCard extends StatelessWidget {
   final String selectedLabel;
   final String inactiveLabel;
   final String ticketLabel;
+  final String statusLabel;
   final VoidCallback? onTap;
 
   @override
@@ -75,9 +77,9 @@ class ProductCard extends StatelessWidget {
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (product.status.isNotEmpty)
+                    if (statusLabel.isNotEmpty)
                       Text(
-                        product.status,
+                        statusLabel,
                         style: tt.bodySmall?.copyWith(
                           color: EdenredColors.slateMuted,
                         ),

@@ -17,6 +17,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 42',
+        statusLabel: 'OK',
         onTap: () {},
       ),
     ));
@@ -32,6 +33,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 42',
+        statusLabel: 'OK',
         onTap: () {},
       ),
     ));
@@ -46,6 +48,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 7',
+        statusLabel: '',
         onTap: null,
       ),
     ));
@@ -60,6 +63,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 42',
+        statusLabel: 'OK',
         onTap: () {},
       ),
     ));
@@ -75,6 +79,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 7',
+        statusLabel: '',
         onTap: null,
       ),
     ));
@@ -90,6 +95,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 42',
+        statusLabel: 'OK',
         onTap: () {},
       ),
     ));
@@ -106,6 +112,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 42',
+        statusLabel: 'OK',
         onTap: () => tapped = true,
       ),
     ));
@@ -121,6 +128,7 @@ void main() {
         selectedLabel: 'SEL',
         inactiveLabel: 'OFF',
         ticketLabel: 'Ticket 7',
+        statusLabel: '',
         onTap: null,
       ),
     ));
