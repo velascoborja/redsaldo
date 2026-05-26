@@ -62,39 +62,34 @@ class _WeekChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: const BoxDecoration(
-            color: Color(0xFFF0EDEF),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: const BoxDecoration(
+        color: Color(0xFFF0EDEF),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 6,
+            height: 6,
+            decoration: const BoxDecoration(
+              color: EdenredColors.redAlert,
+              shape: BoxShape.circle,
+            ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: const BoxDecoration(
-                  color: EdenredColors.redAlert,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 5),
-              Text(
-                label,
-                style: GoogleFonts.manrope(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: EdenredColors.navyDark,
-                ),
-              ),
-            ],
+          const SizedBox(width: 5),
+          Text(
+            label,
+            style: GoogleFonts.manrope(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: EdenredColors.navyDark,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
