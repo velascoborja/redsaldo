@@ -14,8 +14,9 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // summary.transactions is the current-week slice; controller.transactions is the full unfiltered fetch
     final transactions = controller.summary?.transactions ?? [];
+    final loc = AppLocalizations.of(context);
+    final tt = Theme.of(context).textTheme;
 
     return transactions.isEmpty
         ? _EmptyState()
@@ -27,8 +28,17 @@ class HistoryScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
                 children: [
                   Text(
-                    AppLocalizations.of(context).recentSpending,
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    loc.recentSpending,
+                    style: tt.headlineLarge,
+                  ),
+                  const SizedBox(height: 8),
+                  _WeekChip(label: controller.summary!.range.label),
+                  const SizedBox(height: 4),
+                  Text(
+                    loc.showingThisWeekOnly,
+                    style: tt.bodySmall?.copyWith(
+                      color: EdenredColors.slateLight,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   for (final t in transactions)
@@ -40,6 +50,52 @@ class HistoryScreen extends StatelessWidget {
               ),
             ),
           );
+  }
+}
+
+// ── Week Chip ─────────────────────────────────────────────────────────────────
+
+class _WeekChip extends StatelessWidget {
+  const _WeekChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: const BoxDecoration(
+            color: Color(0xFFF0EDEF),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 6,
+                height: 6,
+                decoration: const BoxDecoration(
+                  color: EdenredColors.redAlert,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                label,
+                style: GoogleFonts.manrope(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: EdenredColors.navyDark,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 

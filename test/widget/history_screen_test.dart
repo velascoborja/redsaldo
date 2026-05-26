@@ -41,6 +41,36 @@ void main() {
 
     expect(find.byIcon(Icons.receipt_long_outlined), findsOneWidget);
   });
+
+  testWidgets('shows week range chip when transactions exist', (tester) async {
+    final controller = _makeController(
+      weekTransactions: [
+        _tx(businessName: 'Burger Palace', amount: -8.50),
+      ],
+    );
+
+    await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
+
+    // The chip displays the label from WeekRange — '12 May - 18 May' in the test helper.
+    expect(find.text('12 May - 18 May'), findsOneWidget);
+  });
+
+  testWidgets('shows explanatory subtitle when transactions exist', (
+    tester,
+  ) async {
+    final controller = _makeController(
+      weekTransactions: [
+        _tx(businessName: 'Burger Palace', amount: -8.50),
+      ],
+    );
+
+    await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
+
+    expect(
+      find.text("Showing this week's transactions only"),
+      findsOneWidget,
+    );
+  });
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
