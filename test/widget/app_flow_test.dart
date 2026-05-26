@@ -105,7 +105,7 @@ void main() {
     expect(
       find.descendant(
         of: find.byType(AppBar),
-        matching: find.text('Redsaldo'),
+        matching: find.text('Available balance'),
       ),
       findsOneWidget,
     );

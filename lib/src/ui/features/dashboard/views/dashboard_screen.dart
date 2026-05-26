@@ -77,37 +77,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<void> _editWeeklyLimit(BuildContext context) async {
-    final textController = TextEditingController(
-      text: _c.weeklyLimit.toStringAsFixed(2),
-    );
-    final value = await showDialog<double>(
+    final value = await showModalBottomSheet<double>(
       context: context,
-      builder: (dialogContext) {
-        final loc = AppLocalizations.of(dialogContext);
-        return AlertDialog(
-          title: Text(loc.weeklyLimit),
-          content: TextField(
-            controller: textController,
-            keyboardType:
-                const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(suffixText: 'EUR'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(),
-              child: Text(loc.cancelAction),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.of(dialogContext).pop(
-                double.tryParse(
-                  textController.text.replaceAll(',', '.'),
-                ),
-              ),
-              child: Text(loc.saveAction),
-            ),
-          ],
-        );
-      },
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _SetLimitBottomSheet(initialValue: _c.weeklyLimit),
     );
     if (value != null) {
       await _c.saveWeeklyLimit(value);
@@ -559,6 +534,257 @@ class _BottomNavBar extends StatelessWidget {
           label: 'Settings',
         ),
       ],
+    );
+  }
+}
+
+// ── Set Limit Bottom Sheet ────────────────────────────────────────────────────
+
+class _SetLimitBottomSheet extends StatefulWidget {
+  const _SetLimitBottomSheet({required this.initialValue});
+
+  final double initialValue;
+
+  @override
+  State<_SetLimitBottomSheet> createState() => _SetLimitBottomSheetState();
+}
+
+class _SetLimitBottomSheetState extends State<_SetLimitBottomSheet> {
+  late final TextEditingController _controller;
+
+  static const _presets = [55.0, 60.0, 75.0];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: widget.initialValue.toStringAsFixed(2),
+    );
+    _controller.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool _isPresetSelected(double preset) {
+    final current = double.tryParse(
+      _controller.text.replaceAll(',', '.'),
+    );
+    return current != null && (current - preset).abs() < 0.001;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    final tt = Theme.of(context).textTheme;
+
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.viewInsetsOf(context).bottom,
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: EdenredColors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+        ),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Container(
+                width: 32,
+                height: 6,
+                margin: const EdgeInsets.only(bottom: 16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFC6C6CD),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  loc.editWeeklyLimit,
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: EdenredColors.navyDark,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  color: EdenredColors.slateMuted,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+            _LimitInput(controller: _controller),
+            const SizedBox(height: 8),
+            Text(
+              'Suggested limit based on 5 working days',
+              style: tt.bodySmall?.copyWith(color: EdenredColors.slateMuted),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: _presets
+                  .map(
+                    (v) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: _PresetChip(
+                        label: '${v.toStringAsFixed(0)} €',
+                        selected: _isPresetSelected(v),
+                        onTap: () => setState(() {
+                          _controller.text = v.toStringAsFixed(2);
+                        }),
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: EdenredColors.redAlert,
+                  foregroundColor: EdenredColors.white,
+                  shape: const StadiumBorder(),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  textStyle: GoogleFonts.plusJakartaSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 2,
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(
+                  double.tryParse(
+                    _controller.text.replaceAll(',', '.'),
+                  ),
+                ),
+                icon: const Icon(Icons.check, size: 20),
+                label: Text(loc.saveAction),
+              ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: EdenredColors.navyDark,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  textStyle: GoogleFonts.plusJakartaSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 2,
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(loc.cancelAction),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LimitInput extends StatelessWidget {
+  const _LimitInput({required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        SizedBox(
+          width: 140,
+          child: TextField(
+            controller: controller,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            textAlign: TextAlign.center,
+            autofocus: true,
+            style: GoogleFonts.plusJakartaSans(
+              fontSize: 40,
+              fontWeight: FontWeight.w600,
+              color: EdenredColors.navyDark,
+            ),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: EdenredColors.redAlert,
+                  width: 2,
+                ),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: EdenredColors.redAlert,
+                  width: 2,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          '€',
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 40,
+            fontWeight: FontWeight.w600,
+            color: EdenredColors.navyDark,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _PresetChip extends StatelessWidget {
+  const _PresetChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: selected ? EdenredColors.redAlert : EdenredColors.white,
+          border: Border.all(
+            color: selected ? EdenredColors.redAlert : EdenredColors.navyDark,
+          ),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: selected ? EdenredColors.white : EdenredColors.navyDark,
+          ),
+        ),
+      ),
     );
   }
 }
