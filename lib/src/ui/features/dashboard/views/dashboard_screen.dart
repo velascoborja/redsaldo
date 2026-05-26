@@ -622,16 +622,15 @@ class _SetLimitBottomSheetState extends State<_SetLimitBottomSheet> {
     final loc = AppLocalizations.of(context);
     final tt = Theme.of(context).textTheme;
 
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.viewInsetsOf(context).bottom,
+    final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
+
+    return Container(
+      decoration: const BoxDecoration(
+        color: EdenredColors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
       ),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: EdenredColors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-        ),
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 40),
+      padding: EdgeInsets.fromLTRB(20, 8, 20, 40 + bottomInset),
+      child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
