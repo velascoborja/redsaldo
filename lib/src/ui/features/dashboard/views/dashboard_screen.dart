@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -201,37 +202,71 @@ class _HeroBalanceCard extends StatelessWidget {
             style: tt.bodyMedium?.copyWith(color: EdenredColors.slateMuted),
           ),
           const SizedBox(height: 16),
-          SizedBox(
-            width: 192,
-            height: 192,
-            child: Stack(
-              children: [
-                CustomPaint(
-                  size: const Size(192, 192),
-                  painter: _ProgressRingPainter(progress),
-                ),
-                Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 16),
-                      Text(
-                        remaining.toStringAsFixed(2),
-                        style: tt.displayLarge?.copyWith(height: 1.0),
-                      ),
-                      Text(
-                        'EUR',
-                        style: tt.bodyMedium?.copyWith(
-                          color: EdenredColors.slateMuted,
-                          height: 1.0,
-                        ),
-                      ),
-                    ],
+          if (remaining <= 0.0)
+            Container(
+              height: 192,
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.account_balance_wallet_outlined,
+                    size: 64,
+                    color: EdenredColors.slateMuted,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  Text(
+                    loc.zeroBalanceTitle,
+                    style: tt.headlineMedium?.copyWith(
+                      color: EdenredColors.slateMuted,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    loc.zeroBalanceSubtitle,
+                    style: tt.bodyMedium?.copyWith(
+                      color: EdenredColors.slateMuted,
+                      height: 1.4,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            )
+          else
+            SizedBox(
+              width: 192,
+              height: 192,
+              child: Stack(
+                children: [
+                  CustomPaint(
+                    size: const Size(192, 192),
+                    painter: _ProgressRingPainter(progress),
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 16),
+                        Text(
+                          remaining.toStringAsFixed(2),
+                          style: tt.displayLarge?.copyWith(height: 1.0),
+                        ),
+                        Text(
+                          'EUR',
+                          style: tt.bodyMedium?.copyWith(
+                            color: EdenredColors.slateMuted,
+                            height: 1.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
           const SizedBox(height: 16),
           Text(
             loc.spentOfLimitText(spent.toStringAsFixed(2), limit.toStringAsFixed(2)),
@@ -793,4 +828,56 @@ class _PresetChip extends StatelessWidget {
       ),
     );
   }
+}
+
+// ── Previews ──────────────────────────────────────────────────────────────────
+
+@Preview(name: 'Hero Card - 0€ Remaining', group: 'Dashboard')
+Widget previewHeroCardZero() {
+  return MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    debugShowCheckedModeBanner: false,
+    home: const Scaffold(
+      backgroundColor: EdenredColors.grayLight,
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: _HeroBalanceCard(
+            remainingLabel: 'Remaining this week',
+            remaining: 0.0,
+            spent: 60.0,
+            limit: 60.0,
+            progress: 1.0,
+            rangeLabel: 'Current Week',
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+@Preview(name: 'Hero Card - Full Amount', group: 'Dashboard')
+Widget previewHeroCardFull() {
+  return MaterialApp(
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    debugShowCheckedModeBanner: false,
+    home: const Scaffold(
+      backgroundColor: EdenredColors.grayLight,
+      body: Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: _HeroBalanceCard(
+            remainingLabel: 'Remaining this week',
+            remaining: 60.0,
+            spent: 0.0,
+            limit: 60.0,
+            progress: 0.0,
+            rangeLabel: 'Current Week',
+          ),
+        ),
+      ),
+    ),
+  );
 }

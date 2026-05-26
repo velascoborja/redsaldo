@@ -84,5 +84,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "zeroBalanceTitle": "0.00 EUR",
+  "zeroBalanceSubtitle": "Presupuesto semanal agotado. Espera a la próxima semana para el reinicio."
 }

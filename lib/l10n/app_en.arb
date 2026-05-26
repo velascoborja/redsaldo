@@ -84,5 +84,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "zeroBalanceTitle": "0.00 EUR",
+  "zeroBalanceSubtitle": "Weekly budget fully utilized. Wait until next week for the reset."
 }

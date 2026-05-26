@@ -403,6 +403,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{spent} EUR spent of {limit} EUR limit'**
   String spentOfLimitText(String spent, String limit);
+
+  /// No description provided for @zeroBalanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'0.00 EUR'**
+  String get zeroBalanceTitle;
+
+  /// No description provided for @zeroBalanceSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly budget fully utilized. Wait until next week for the reset.'**
+  String get zeroBalanceSubtitle;
 }
 
 class _AppLocalizationsDelegate

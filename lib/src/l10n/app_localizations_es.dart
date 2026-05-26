@@ -174,4 +174,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String spentOfLimitText(String spent, String limit) {
     return '$spent EUR gastados de un límite de $limit EUR';
   }
+
+  @override
+  String get zeroBalanceTitle => '0.00 EUR';
+
+  @override
+  String get zeroBalanceSubtitle =>
+      'Presupuesto semanal agotado. Espera a la próxima semana para el reinicio.';
 }
