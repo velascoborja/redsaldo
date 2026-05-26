@@ -48,6 +48,7 @@
   "homeTitle": "Available balance",
   "historyTitle": "History",
   "recentSpending": "Recent spending",
+  "showingThisWeekOnly": "Showing this week's transactions only",
   "notCounted": "NOT COUNTED",
   "noTransactionsTitle": "No transactions yet",
   "noTransactionsBody": "Your spending history will appear here."

@@ -284,6 +284,12 @@ abstract class AppLocalizations {
   /// **'Recent spending'**
   String get recentSpending;
 
+  /// No description provided for @showingThisWeekOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing this week\'s transactions only'**
+  String get showingThisWeekOnly;
+
   /// No description provided for @notCounted.
   ///
   /// In en, this message translates to:

@@ -48,6 +48,7 @@
   "homeTitle": "Saldo disponible",
   "historyTitle": "Historial",
   "recentSpending": "Gastos recientes",
+  "showingThisWeekOnly": "Mostrando solo las transacciones de esta semana",
   "notCounted": "NO COMPUTA",
   "noTransactionsTitle": "Sin transacciones",
   "noTransactionsBody": "Tu historial de gastos aparecerá aquí."

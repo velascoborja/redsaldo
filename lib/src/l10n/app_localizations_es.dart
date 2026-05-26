@@ -108,6 +108,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get recentSpending => 'Gastos recientes';
 
   @override
+  String get showingThisWeekOnly =>
+      'Mostrando solo las transacciones de esta semana';
+
+  @override
   String get notCounted => 'NO COMPUTA';
 
   @override
