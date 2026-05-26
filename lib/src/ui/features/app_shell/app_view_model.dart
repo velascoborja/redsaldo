@@ -60,12 +60,18 @@ class AppViewModel extends ChangeNotifier {
     );
     await _preferences.saveSelectedProduct(selected);
     selectedProduct = selected;
+    _setStatus(AppStatus.loading);
     await refreshDashboard();
   }
 
   Future<void> saveWeeklyLimit(double value) async {
     await _preferences.saveWeeklyLimit(value);
-    await refreshDashboard();
+    summary = calculateWeeklyBudget(
+      weeklyLimit: value,
+      nowUtc: _now().toUtc(),
+      transactions: transactions,
+    );
+    notifyListeners();
   }
 
   Future<void> refreshDashboard() async {
