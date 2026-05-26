@@ -62,6 +62,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _HomeBody(
               controller: _c,
               onEditLimit: () => _editWeeklyLimit(context),
+              onChangeCard: () => setState(() => _selectedIndex = 2),
             ),
             HistoryScreen(controller: _c),
             SettingsScreen(controller: _c),
@@ -117,10 +118,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
 // ── Home Body ─────────────────────────────────────────────────────────────────
 
 class _HomeBody extends StatelessWidget {
-  const _HomeBody({required this.controller, required this.onEditLimit});
+  const _HomeBody({
+    required this.controller,
+    required this.onEditLimit,
+    required this.onChangeCard,
+  });
 
   final AppViewModel controller;
   final VoidCallback onEditLimit;
+  final VoidCallback onChangeCard;
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +157,7 @@ class _HomeBody extends StatelessWidget {
             const SizedBox(height: 16),
             _CardBalanceBanner(
               balance: balance?.amount ?? 0.0,
-              onChangeCard: controller.changeProduct,
+              onChangeCard: onChangeCard,
             ),
             const SizedBox(height: 8),
             IntrinsicHeight(

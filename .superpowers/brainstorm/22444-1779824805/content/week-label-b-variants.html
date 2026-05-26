@@ -1,0 +1,159 @@
+<h2>Option B — chip + explanatory text</h2>
+<p class="subtitle">Pick the wording and placement that feels right</p>
+
+<style>
+  .phone {
+    width: 230px;
+    background: #f5f4f5;
+    border-radius: 28px;
+    padding: 20px 14px 20px;
+    font-family: 'Manrope', sans-serif;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    margin: 0 auto;
+  }
+  .screen-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.2;
+    margin: 0 0 6px;
+  }
+  .screen-chip {
+    display: inline-flex;
+    align-items: center;
+    background: #f0edef;
+    border-radius: 20px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #4a3f5c;
+    letter-spacing: 0.2px;
+  }
+  .screen-chip .dot {
+    width: 6px;
+    height: 6px;
+    background: #e8001c;
+    border-radius: 50%;
+    margin-right: 5px;
+    flex-shrink: 0;
+  }
+  .explain {
+    font-size: 11px;
+    color: #8e8399;
+    line-height: 1.4;
+    margin: 5px 0 0;
+  }
+  .chip-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .chip-explain-inline {
+    font-size: 11px;
+    color: #8e8399;
+  }
+  .tx-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 9px 11px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .tx-icon {
+    width: 34px;
+    height: 34px;
+    background: #f0edef;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .tx-name { font-size: 11px; font-weight: 600; color: #1a1a2e; }
+  .tx-day  { font-size: 10px; color: #8e8399; }
+  .tx-amount { margin-left: auto; font-size: 11px; font-weight: 600; color: #1a1a2e; white-space: nowrap; }
+  .tx-amount.credit { color: #8e8399; }
+  .header-area { margin-bottom: 12px; }
+
+  .cards { gap: 20px; }
+  .card { padding: 0 0 12px; }
+  .card-image { padding: 16px 16px 8px; }
+  .card-body { padding: 0 16px; }
+  .card-body h3 { margin: 4px 0 2px; font-size: 14px; }
+  .card-body p { font-size: 12px; color: #666; margin: 0; }
+  .badge { display:inline-block;width:22px;height:22px;border-radius:50%;background:#e0d9e5;text-align:center;line-height:22px;font-weight:700;font-size:11px;margin-bottom:4px }
+</style>
+
+<div class="cards">
+
+  <!-- Variant 1: chip + subtitle line below -->
+  <div class="card" data-choice="b1" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="phone">
+        <div class="header-area">
+          <p class="screen-title">Recent spending</p>
+          <span class="screen-chip"><span class="dot"></span>20 May – 26 May</span>
+          <p class="explain">Showing this week's transactions only</p>
+        </div>
+        <div class="tx-card"><div class="tx-icon">🍽️</div><div><div class="tx-name">La Tagliatella</div><div class="tx-day">Mon</div></div><div class="tx-amount">-12.50 EUR</div></div>
+        <div class="tx-card"><div class="tx-icon">🏦</div><div><div class="tx-name">Top-up</div><div class="tx-day">Mon</div></div><div class="tx-amount credit">+50.00 EUR</div></div>
+        <div class="tx-card"><div class="tx-icon">🍽️</div><div><div class="tx-name">Mercadona</div><div class="tx-day">Tue</div></div><div class="tx-amount">-8.20 EUR</div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="badge">1</div>
+      <h3>Chip · then sentence below</h3>
+      <p>"Showing this week's transactions only" — explicit, one line, below the chip.</p>
+    </div>
+  </div>
+
+  <!-- Variant 2: chip inline with short label beside it -->
+  <div class="card" data-choice="b2" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="phone">
+        <div class="header-area">
+          <p class="screen-title">Recent spending</p>
+          <div class="chip-row">
+            <span class="screen-chip"><span class="dot"></span>20 May – 26 May</span>
+            <span class="chip-explain-inline">this week only</span>
+          </div>
+        </div>
+        <div class="tx-card"><div class="tx-icon">🍽️</div><div><div class="tx-name">La Tagliatella</div><div class="tx-day">Mon</div></div><div class="tx-amount">-12.50 EUR</div></div>
+        <div class="tx-card"><div class="tx-icon">🏦</div><div><div class="tx-name">Top-up</div><div class="tx-day">Mon</div></div><div class="tx-amount credit">+50.00 EUR</div></div>
+        <div class="tx-card"><div class="tx-icon">🍽️</div><div><div class="tx-name">Mercadona</div><div class="tx-day">Tue</div></div><div class="tx-amount">-8.20 EUR</div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="badge">2</div>
+      <h3>Chip inline with "this week only"</h3>
+      <p>Short label sits on the same row as the chip. More compact, single-line header area.</p>
+    </div>
+  </div>
+
+  <!-- Variant 3: chip with "This week" label inside, then date subtitle -->
+  <div class="card" data-choice="b3" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="phone">
+        <div class="header-area">
+          <p class="screen-title">Recent spending</p>
+          <span class="screen-chip"><span class="dot"></span>This week · 20 May – 26 May</span>
+          <p class="explain">Transactions outside this period are not shown</p>
+        </div>
+        <div class="tx-card"><div class="tx-icon">🍽️</div><div><div class="tx-name">La Tagliatella</div><div class="tx-day">Mon</div></div><div class="tx-amount">-12.50 EUR</div></div>
+        <div class="tx-card"><div class="tx-icon">🏦</div><div><div class="tx-name">Top-up</div><div class="tx-day">Mon</div></div><div class="tx-amount credit">+50.00 EUR</div></div>
+        <div class="tx-card"><div class="tx-icon">🍽️</div><div><div class="tx-name">Mercadona</div><div class="tx-day">Tue</div></div><div class="tx-amount">-8.20 EUR</div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="badge">3</div>
+      <h3>"This week" inside chip · sentence below</h3>
+      <p>Chip says "This week · 20 May – 26 May". Sentence below clarifies that older transactions are excluded.</p>
+    </div>
+  </div>
+
+</div>
