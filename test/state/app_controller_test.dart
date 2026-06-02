@@ -175,5 +175,6 @@ DomainTransaction tx({required double amount, required DateTime dateUtc}) {
     businessName: '',
     city: '',
     province: '',
+    countsTowardLimit: amount < 0,
   );
 }

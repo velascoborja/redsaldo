@@ -71,6 +71,24 @@ void main() {
       findsOneWidget,
     );
   });
+
+  testWidgets('shows NOT COUNTED badge for settlement transactions', (
+    tester,
+  ) async {
+    final controller = _makeController(
+      weekTransactions: [
+        _tx(
+          businessName: 'Liquidación pendiente',
+          amount: -0.60,
+          countsTowardLimit: false,
+        ),
+      ],
+    );
+
+    await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
+
+    expect(find.text('NOT COUNTED'), findsOneWidget);
+  });
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -107,7 +125,11 @@ AppViewModel _makeController({
   return vm;
 }
 
-DomainTransaction _tx({required String businessName, required double amount}) {
+DomainTransaction _tx({
+  required String businessName,
+  required double amount,
+  bool? countsTowardLimit,
+}) {
   return DomainTransaction(
     id: '1',
     dateUtc: DateTime.utc(2026, 5, 13),
@@ -116,6 +138,7 @@ DomainTransaction _tx({required String businessName, required double amount}) {
     businessName: businessName,
     city: '',
     province: '',
+    countsTowardLimit: countsTowardLimit ?? amount < 0,
   );
 }
 

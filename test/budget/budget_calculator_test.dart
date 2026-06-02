@@ -29,9 +29,31 @@ void main() {
     expect(summary.remaining, 42.66);
     expect(summary.transactions.length, 2);
   });
+
+  test('excludes settlement transactions from weekly spend', () {
+    final summary = calculateWeeklyBudget(
+      weeklyLimit: 55,
+      nowUtc: DateTime.utc(2026, 5, 6, 12),
+      transactions: <DomainTransaction>[
+        tx(amount: -12.34, dateUtc: DateTime.utc(2026, 5, 5, 10)),
+        tx(
+          amount: -0.60,
+          dateUtc: DateTime.utc(2026, 5, 5, 11),
+          countsTowardLimit: false,
+        ),
+      ],
+    );
+
+    expect(summary.weeklySpend, 12.34);
+    expect(summary.transactions.length, 2);
+  });
 }
 
-DomainTransaction tx({required double amount, required DateTime dateUtc}) {
+DomainTransaction tx({
+  required double amount,
+  required DateTime dateUtc,
+  bool? countsTowardLimit,
+}) {
   return DomainTransaction(
     id: '',
     dateUtc: dateUtc,
@@ -40,5 +62,6 @@ DomainTransaction tx({required double amount, required DateTime dateUtc}) {
     businessName: '',
     city: '',
     province: '',
+    countsTowardLimit: countsTowardLimit ?? amount < 0,
   );
 }

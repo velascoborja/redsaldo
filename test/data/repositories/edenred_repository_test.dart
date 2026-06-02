@@ -52,6 +52,34 @@ void main() {
     expect(transactions.single.businessName, 'Cafe');
     expect(transactions.single.city, 'Madrid');
     expect(transactions.single.province, 'Madrid');
+    expect(transactions.single.countsTowardLimit, isTrue);
+  });
+
+  test('marks Liquidación pendiente as not counting toward limit', () async {
+    final repository = EdenredRepositoryImpl(
+      service: FakeEdenredApiService(
+        products: const [],
+        balance: const EdenredBalance(amount: 0),
+        transactions: [
+          EdenredTransaction(
+            id: 'settle-1',
+            dateUtc: DateTime.utc(2026, 5, 31, 22),
+            description: 'Liquidación pendiente',
+            amount: -0.60,
+            businessName: '',
+            city: '',
+            province: '',
+          ),
+        ],
+      ),
+    );
+
+    final transactions = await repository.fetchTransactions(
+      accessToken: 'access',
+      idTicket: 123,
+    );
+
+    expect(transactions.single.countsTowardLimit, isFalse);
   });
 }
 
