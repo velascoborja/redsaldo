@@ -153,7 +153,7 @@ class _TransactionCard extends StatelessWidget {
                         height: 1.2,
                       ),
                     ),
-                    if (isTopUp) ...[
+                    if (!transaction.countsTowardLimit) ...[
                       const SizedBox(width: 6),
                       _NotCountedBadge(),
                     ],

@@ -70,6 +70,14 @@ class EdenredRepositoryImpl implements EdenredRepository {
       businessName: transaction.businessName,
       city: transaction.city,
       province: transaction.province,
+      countsTowardLimit:
+          transaction.amount < 0 &&
+          !_isSettlement(transaction.description),
     );
+  }
+
+  // Edenred posts "Liquidación pendiente" when it withdraws unspent balance at month-end.
+  static bool _isSettlement(String description) {
+    return description.toLowerCase().contains('liquidaci');
   }
 }

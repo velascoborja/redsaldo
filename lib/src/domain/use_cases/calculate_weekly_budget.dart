@@ -52,7 +52,7 @@ WeeklyBudgetSummary calculateWeeklyBudget({
       .where((transaction) => range.contains(transaction.dateUtc))
       .toList(growable: false);
   final spend = inWeek
-      .where((transaction) => transaction.amount < 0)
+      .where((transaction) => transaction.countsTowardLimit)
       .fold<double>(
         0,
         (total, transaction) => total + transaction.amount.abs(),

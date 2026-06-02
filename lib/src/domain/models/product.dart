@@ -27,6 +27,7 @@ class DomainTransaction {
     required this.businessName,
     required this.city,
     required this.province,
+    required this.countsTowardLimit,
   });
 
   final String id;
@@ -36,6 +37,8 @@ class DomainTransaction {
   final String businessName;
   final String city;
   final String province;
+  // false for top-ups and provider settlements (e.g. "Liquidación pendiente")
+  final bool countsTowardLimit;
 }
 
 class SelectedProduct {
