@@ -14,9 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('shows current-week transactions from summary', (tester) async {
     final controller = _makeController(
-      weekTransactions: [
-        _tx(businessName: 'Burger Palace', amount: -8.50),
-      ],
+      weekTransactions: [_tx(businessName: 'Burger Palace', amount: -8.50)],
     );
 
     await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
@@ -44,9 +42,7 @@ void main() {
 
   testWidgets('shows week range chip when transactions exist', (tester) async {
     final controller = _makeController(
-      weekTransactions: [
-        _tx(businessName: 'Burger Palace', amount: -8.50),
-      ],
+      weekTransactions: [_tx(businessName: 'Burger Palace', amount: -8.50)],
     );
 
     await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
@@ -59,17 +55,12 @@ void main() {
     tester,
   ) async {
     final controller = _makeController(
-      weekTransactions: [
-        _tx(businessName: 'Burger Palace', amount: -8.50),
-      ],
+      weekTransactions: [_tx(businessName: 'Burger Palace', amount: -8.50)],
     );
 
     await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
 
-    expect(
-      find.text("Showing this week's transactions only"),
-      findsOneWidget,
-    );
+    expect(find.text("Showing this week's transactions only"), findsOneWidget);
   });
 
   testWidgets('shows NOT COUNTED badge for settlement transactions', (
@@ -88,6 +79,26 @@ void main() {
     await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
 
     expect(find.text('NOT COUNTED'), findsOneWidget);
+  });
+
+  testWidgets('shows long transaction location in portrait cards', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    const location = '37, VILLANUEVA DE,28691,ESP,ESP';
+    final controller = _makeController(
+      weekTransactions: [
+        _tx(businessName: 'ABARZUA - C. CRISTO', amount: -24, city: location),
+      ],
+    );
+
+    await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
+
+    expect(find.text(location), findsOneWidget);
+    expect(find.text('-24.00 EUR'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }
 
@@ -128,6 +139,8 @@ AppViewModel _makeController({
 DomainTransaction _tx({
   required String businessName,
   required double amount,
+  String city = '',
+  String province = '',
   bool? countsTowardLimit,
 }) {
   return DomainTransaction(
@@ -136,8 +149,8 @@ DomainTransaction _tx({
     description: 'test',
     amount: amount,
     businessName: businessName,
-    city: '',
-    province: '',
+    city: city,
+    province: province,
     countsTowardLimit: countsTowardLimit ?? amount < 0,
   );
 }
