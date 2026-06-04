@@ -4,8 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../l10n/app_localizations.dart';
 
-const _heroImageUrl =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuBdQXQnQxxTM9AHc_PF0NgBUK9lq6Ze6IIGFy2Cl5-fibJqROl355sJ0FNLtjTRH2G5IdgEO6ilAklQ4EuIIdrk9GL2YEPrUVWnD_-KTPWEz7jwr_07JYl4ofScA_jY0dBRUVa-vvOJjFzDgSBIDzu8sxgExm9QN2uu_k0YkmlTI4yLUSEWYydpVBRR44mSrHzW3n02Qh3PuDzbuJB8w5CNZYYsrBAykjaeabu98FqXjybjW3duO9rgYExv2Gr1gslNdi_1JtHQEfU';
+const _heroImageAsset = 'assets/images/login_hero.webp';
 
 const _navyDark = Color(0xFF0F172A);
 const _navyMedium = Color(0xFF1E293B);
@@ -51,14 +50,10 @@ class LoginScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.network(
-              _heroImageUrl,
+            child: Image.asset(
+              _heroImageAsset,
               fit: BoxFit.cover,
               excludeFromSemantics: true,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Container(color: _navyMedium);
-              },
               errorBuilder: (context, error, stackTrace) {
                 return Container(color: _navyMedium);
               },
