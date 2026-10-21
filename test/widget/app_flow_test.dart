@@ -65,7 +65,13 @@ void main() {
   testWidgets('loading app status shows syncing account screen', (
     tester,
   ) async {
-    await tester.pumpWidget(const MaterialApp(home: SyncingAccountScreen()));
+    await tester.pumpWidget(
+      const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: SyncingAccountScreen(),
+      ),
+    );
 
     expect(find.text('Syncing your account'), findsOneWidget);
     expect(find.text('Fetching your balance...'), findsOneWidget);
@@ -123,14 +129,16 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.tap(
+      find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('Settings'),
+      ),
+    );
     await tester.pump();
 
     expect(
-      find.descendant(
-        of: find.byType(AppBar),
-        matching: find.text('Settings'),
-      ),
+      find.descendant(of: find.byType(AppBar), matching: find.text('Settings')),
       findsOneWidget,
     );
   });

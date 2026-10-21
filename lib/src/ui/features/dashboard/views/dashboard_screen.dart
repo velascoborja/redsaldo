@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart' as intl;
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../core/app_bottom_navigation_bar.dart';
+import '../../../core/money.dart';
 import '../../../core/theme.dart';
 import '../../app_shell/app_view_model.dart';
 import '../../history/views/history_screen.dart';
@@ -30,6 +32,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final localizations = AppLocalizations.of(context);
 
     return Scaffold(
+      extendBody: true,
       backgroundColor: EdenredColors.grayLight,
       appBar: AppBar(
         backgroundColor: EdenredColors.white,
@@ -70,9 +73,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: _BottomNavBar(
+      bottomNavigationBar: AppBottomNavigationBar(
         selectedIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
+        onSelected: (index) => setState(() => _selectedIndex = index),
       ),
     );
   }
@@ -116,11 +119,17 @@ class _HomeBody extends StatelessWidget {
     final progress = limit > 0 ? (remaining / limit).clamp(0.0, 1.0) : 0.0;
 
     return SafeArea(
+      bottom: false,
       child: RefreshIndicator(
         onRefresh: controller.refreshDashboard,
         color: EdenredColors.redAlert,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+          padding: EdgeInsets.fromLTRB(
+            20,
+            16,
+            20,
+            24 + MediaQuery.paddingOf(context).bottom,
+          ),
           children: [
             _HeroBalanceCard(
               remainingLabel: localizations.remainingThisWeek,
@@ -140,9 +149,7 @@ class _HomeBody extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: _EditLimitCard(onTap: onEditLimit),
-                  ),
+                  Expanded(child: _EditLimitCard(onTap: onEditLimit)),
                   const SizedBox(width: 8),
                   Expanded(
                     child: _LastUpdatedCard(
@@ -246,22 +253,30 @@ class _HeroBalanceCard extends StatelessWidget {
                     painter: _ProgressRingPainter(progress),
                   ),
                   Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const SizedBox(height: 16),
-                        Text(
-                          remaining.toStringAsFixed(2),
-                          style: tt.displayLarge?.copyWith(height: 1.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              formatAmount(remaining),
+                              style: tt.displayLarge?.copyWith(height: 1.0),
+                            ),
+                            const SizedBox(width: 6),
+                            Text(
+                              '€',
+                              style: tt.bodyMedium?.copyWith(
+                                color: EdenredColors.slateMuted,
+                                height: 1.0,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          'EUR',
-                          style: tt.bodyMedium?.copyWith(
-                            color: EdenredColors.slateMuted,
-                            height: 1.0,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -269,15 +284,14 @@ class _HeroBalanceCard extends StatelessWidget {
             ),
           const SizedBox(height: 16),
           Text(
-            loc.spentOfLimitText(spent.toStringAsFixed(2), limit.toStringAsFixed(2)),
+            loc.spentOfLimitText(formatAmount(spent), formatAmount(limit)),
             style: tt.bodyMedium?.copyWith(color: EdenredColors.slateMuted),
             textAlign: TextAlign.center,
           ),
           if (rangeLabel.isNotEmpty) ...[
             const SizedBox(height: 16),
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: const BoxDecoration(
                 color: EdenredColors.grayLight,
                 borderRadius: BorderRadius.all(Radius.circular(100)),
@@ -336,10 +350,7 @@ class _ProgressRingPainter extends CustomPainter {
 // ── Card Balance Banner ───────────────────────────────────────────────────────
 
 class _CardBalanceBanner extends StatelessWidget {
-  const _CardBalanceBanner({
-    required this.balance,
-    required this.onChangeCard,
-  });
+  const _CardBalanceBanner({required this.balance, required this.onChangeCard});
 
   final double balance;
   final VoidCallback onChangeCard;
@@ -369,11 +380,7 @@ class _CardBalanceBanner extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.credit_card,
-              color: Colors.white,
-              size: 22,
-            ),
+            child: const Icon(Icons.credit_card, color: Colors.white, size: 22),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -391,7 +398,7 @@ class _CardBalanceBanner extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${balance.toStringAsFixed(2)} EUR',
+                  '${balance.toStringAsFixed(2)} €',
                   style: GoogleFonts.plusJakartaSans(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
@@ -408,10 +415,7 @@ class _CardBalanceBanner extends StatelessWidget {
               backgroundColor: Colors.white,
               foregroundColor: EdenredColors.redAlert,
               elevation: 0,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 10,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               shape: const StadiumBorder(),
               textStyle: GoogleFonts.plusJakartaSans(
                 fontSize: 14,
@@ -477,7 +481,9 @@ class _LastUpdatedCard extends StatelessWidget {
     final loc = AppLocalizations.of(context);
     final locale = Localizations.localeOf(context).languageCode;
     final timeLabel = lastRefreshed != null
-        ? loc.lastUpdatedToday(intl.DateFormat('jm', locale).format(lastRefreshed!))
+        ? loc.lastUpdatedToday(
+            intl.DateFormat('jm', locale).format(lastRefreshed!),
+          )
         : '—';
 
     return Container(
@@ -499,11 +505,7 @@ class _LastUpdatedCard extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.sync,
-                color: EdenredColors.slateMuted,
-                size: 16,
-              ),
+              const Icon(Icons.sync, color: EdenredColors.slateMuted, size: 16),
               const SizedBox(width: 4),
               Text(
                 loc.lastUpdatedLabel,
@@ -517,64 +519,13 @@ class _LastUpdatedCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             timeLabel,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              fontSize: 14,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(fontSize: 14),
             textAlign: TextAlign.center,
           ),
         ],
       ),
-    );
-  }
-}
-
-// ── Bottom Navigation Bar ─────────────────────────────────────────────────────
-
-class _BottomNavBar extends StatelessWidget {
-  const _BottomNavBar({
-    required this.selectedIndex,
-    required this.onTap,
-  });
-
-  final int selectedIndex;
-  final ValueChanged<int> onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context);
-    return BottomNavigationBar(
-      currentIndex: selectedIndex,
-      onTap: onTap,
-      backgroundColor: Colors.white,
-      selectedItemColor: EdenredColors.redAlert,
-      unselectedItemColor: EdenredColors.slateMuted,
-      selectedLabelStyle: GoogleFonts.manrope(
-        fontSize: 12,
-        fontWeight: FontWeight.w600,
-      ),
-      unselectedLabelStyle: GoogleFonts.manrope(
-        fontSize: 12,
-        fontWeight: FontWeight.w600,
-      ),
-      type: BottomNavigationBarType.fixed,
-      elevation: 8,
-      items: [
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.home_outlined),
-          activeIcon: const Icon(Icons.home),
-          label: loc.navHome,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.receipt_long_outlined),
-          activeIcon: const Icon(Icons.receipt_long),
-          label: loc.historyTitle,
-        ),
-        BottomNavigationBarItem(
-          icon: const Icon(Icons.settings_outlined),
-          activeIcon: const Icon(Icons.settings),
-          label: loc.settingsTitle,
-        ),
-      ],
     );
   }
 }
@@ -611,9 +562,7 @@ class _SetLimitBottomSheetState extends State<_SetLimitBottomSheet> {
   }
 
   bool _isPresetSelected(double preset) {
-    final current = double.tryParse(
-      _controller.text.replaceAll(',', '.'),
-    );
+    final current = double.tryParse(_controller.text.replaceAll(',', '.'));
     return current != null && (current - preset).abs() < 0.001;
   }
 
@@ -704,11 +653,9 @@ class _SetLimitBottomSheetState extends State<_SetLimitBottomSheet> {
                     letterSpacing: 2,
                   ),
                 ),
-                onPressed: () => Navigator.of(context).pop(
-                  double.tryParse(
-                    _controller.text.replaceAll(',', '.'),
-                  ),
-                ),
+                onPressed: () => Navigator.of(
+                  context,
+                ).pop(double.tryParse(_controller.text.replaceAll(',', '.'))),
                 icon: const Icon(Icons.check, size: 20),
                 label: Text(loc.saveAction),
               ),
@@ -764,16 +711,10 @@ class _LimitInput extends StatelessWidget {
             decoration: const InputDecoration(
               border: InputBorder.none,
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: EdenredColors.redAlert,
-                  width: 2,
-                ),
+                borderSide: BorderSide(color: EdenredColors.redAlert, width: 2),
               ),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  color: EdenredColors.redAlert,
-                  width: 2,
-                ),
+                borderSide: BorderSide(color: EdenredColors.redAlert, width: 2),
               ),
             ),
           ),

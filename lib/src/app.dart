@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:native_liquid_glass/native_liquid_glass.dart';
 import 'package:provider/provider.dart';
 
 import 'data/repositories/auth_repository.dart';
@@ -32,6 +33,7 @@ class Edenred55App extends StatefulWidget {
 }
 
 class _Edenred55AppState extends State<Edenred55App> {
+  final _glassNavigatorObserver = LiquidGlassNavigatorObserver();
   late final AppViewModel _controller;
   PkcePair? _activePkce;
   String? _activeState;
@@ -51,6 +53,10 @@ class _Edenred55AppState extends State<Edenred55App> {
     return ChangeNotifierProvider<AppViewModel>.value(
       value: _controller,
       child: MaterialApp(
+        navigatorObservers: [
+          if (NativeLiquidGlassUtils.supportsLiquidGlass)
+            _glassNavigatorObserver,
+        ],
         onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

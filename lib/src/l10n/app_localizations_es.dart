@@ -172,11 +172,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String spentOfLimitText(String spent, String limit) {
-    return '$spent EUR gastados de un límite de $limit EUR';
+    return '$spent € gastados de un límite de $limit €';
   }
 
   @override
-  String get zeroBalanceTitle => '0.00 EUR';
+  String get zeroBalanceTitle => '0.00 €';
 
   @override
   String get zeroBalanceSubtitle =>

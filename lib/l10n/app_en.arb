@@ -74,7 +74,7 @@
   },
   "navHome": "Home",
   "suggestedLimitText": "Suggested limit based on 5 working days",
-  "spentOfLimitText": "{spent} EUR spent of {limit} EUR limit",
+  "spentOfLimitText": "{spent} € spent of {limit} € limit",
   "@spentOfLimitText": {
     "placeholders": {
       "spent": {
@@ -85,6 +85,6 @@
       }
     }
   },
-  "zeroBalanceTitle": "0.00 EUR",
+  "zeroBalanceTitle": "0.00 €",
   "zeroBalanceSubtitle": "Weekly budget fully utilized. Wait until next week for the reset."
 }

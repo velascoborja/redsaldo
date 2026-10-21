@@ -169,6 +169,33 @@ abstract final class EdenredTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         shadowColor: const Color(0x1A000000),
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: EdenredColors.white,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        height: 72,
+        indicatorColor: EdenredColors.redAlert.withValues(alpha: 0.12),
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            size: 24,
+            color: states.contains(WidgetState.selected)
+                ? EdenredColors.redAlert
+                : EdenredColors.slateMuted,
+          ),
+        ),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => GoogleFonts.manrope(
+            fontSize: 12,
+            fontWeight: states.contains(WidgetState.selected)
+                ? FontWeight.w700
+                : FontWeight.w600,
+            color: states.contains(WidgetState.selected)
+                ? EdenredColors.redAlert
+                : EdenredColors.slateMuted,
+          ),
+        ),
+      ),
       dividerTheme: const DividerThemeData(
         color: EdenredColors.borderGray,
         thickness: 1,

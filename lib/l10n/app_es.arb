@@ -74,7 +74,7 @@
   },
   "navHome": "Inicio",
   "suggestedLimitText": "Límite sugerido basado en 5 días laborables",
-  "spentOfLimitText": "{spent} EUR gastados de un límite de {limit} EUR",
+  "spentOfLimitText": "{spent} € gastados de un límite de {limit} €",
   "@spentOfLimitText": {
     "placeholders": {
       "spent": {
@@ -85,6 +85,6 @@
       }
     }
   },
-  "zeroBalanceTitle": "0.00 EUR",
+  "zeroBalanceTitle": "0.00 €",
   "zeroBalanceSubtitle": "Presupuesto semanal agotado. Espera a la próxima semana para el reinicio."
 }

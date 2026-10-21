@@ -112,6 +112,8 @@ void main() {
     await tester.pumpWidget(_wrap(SettingsScreen(controller: controller)));
     await tester.tap(find.text('LOGOUT'));
     await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Log out'));
+    await tester.pumpAndSettle();
 
     expect(controller.status, AppStatus.unauthenticated);
   });

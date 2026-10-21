@@ -64,11 +64,17 @@ class HistoryScreen extends StatelessWidget {
     return transactions.isEmpty
         ? _EmptyState()
         : SafeArea(
+            bottom: false,
             child: RefreshIndicator(
               onRefresh: controller.refreshDashboard,
               color: EdenredColors.redAlert,
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(20, 24, 20, 24),
+                padding: EdgeInsets.fromLTRB(
+                  20,
+                  24,
+                  20,
+                  24 + MediaQuery.paddingOf(context).bottom,
+                ),
                 children: [
                   Text(loc.recentSpending, style: tt.headlineLarge),
                   const SizedBox(height: 8),
@@ -156,7 +162,7 @@ class _TransactionCard extends StatelessWidget {
     final locationText = _transactionLocation(transaction);
 
     final sign = isTopUp ? '+' : '';
-    final amountText = '$sign${transaction.amount.toStringAsFixed(2)} EUR';
+    final amountText = '$sign${transaction.amount.toStringAsFixed(2)} €';
     final amountColor = isTopUp
         ? EdenredColors.slateLight
         : EdenredColors.navyDark;

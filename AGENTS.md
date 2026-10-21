@@ -9,12 +9,12 @@ This is a Flutter application. The entry point is `lib/main.dart`, with app setu
 Use Flutter tooling from the repository root:
 
 ```bash
-rtk flutter pub get
-rtk flutter run
-rtk flutter analyze
-rtk flutter test
-rtk flutter build apk
-rtk flutter build ios
+flutter pub get
+flutter run
+flutter analyze
+flutter test
+flutter build apk
+flutter build ios
 ```
 
 `flutter pub get` installs dependencies. `flutter run` starts the app on a device or simulator. `flutter analyze` enforces analyzer and lint rules. `flutter test` runs unit and widget tests. Build commands produce release artifacts; iOS builds require Xcode and CocoaPods setup.
@@ -25,7 +25,7 @@ Follow Dart and Flutter defaults with two-space indentation. The analyzer includ
 
 ## Testing Guidelines
 
-Use `flutter_test` for unit and widget coverage; mocks may use `mockito` and generated code via `build_runner` when needed. Name tests after the unit under test, for example `auth_service_test.dart` or `budget_calculator_test.dart`. Add or update tests with behavior changes, especially in auth, persistence, API parsing, and budget calculations. Run `rtk flutter test` before submitting changes, and run `rtk flutter analyze` for lint coverage.
+Use `flutter_test` for unit and widget coverage; mocks may use `mockito` and generated code via `build_runner` when needed. Name tests after the unit under test, for example `auth_service_test.dart` or `budget_calculator_test.dart`. Add or update tests with behavior changes, especially in auth, persistence, API parsing, and budget calculations. Run `flutter test` before submitting changes, and run `flutter analyze` for lint coverage.
 
 ## Commit & Pull Request Guidelines
 

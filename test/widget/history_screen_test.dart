@@ -97,7 +97,7 @@ void main() {
     await tester.pumpWidget(_wrap(HistoryScreen(controller: controller)));
 
     expect(find.text(location), findsOneWidget);
-    expect(find.text('-24.00 EUR'), findsOneWidget);
+    expect(find.text('-24.00 €'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
