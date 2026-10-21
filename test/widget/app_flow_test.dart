@@ -4,6 +4,7 @@ import 'package:edenred_55_app/src/data/repositories/edenred_repository.dart';
 import 'package:edenred_55_app/src/data/repositories/preferences_repository.dart';
 import 'package:edenred_55_app/src/domain/models/product.dart';
 import 'package:edenred_55_app/src/l10n/app_localizations.dart';
+import 'package:edenred_55_app/src/ui/core/app_bottom_navigation_bar.dart';
 import 'package:edenred_55_app/src/ui/core/money.dart';
 import 'package:edenred_55_app/src/ui/features/app_shell/app_view_model.dart';
 import 'package:edenred_55_app/src/ui/features/app_shell/views/syncing_account_screen.dart';
@@ -131,7 +132,7 @@ void main() {
 
     await tester.tap(
       find.descendant(
-        of: find.byType(NavigationBar),
+        of: find.byType(AppBottomNavigationBar),
         matching: find.text('Settings'),
       ),
     );
